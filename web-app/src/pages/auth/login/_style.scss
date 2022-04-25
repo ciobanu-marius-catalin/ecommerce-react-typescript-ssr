@@ -1,0 +1,25 @@
+.ecommerce-login-page {
+  display: flex;
+  &__left-side {
+    padding: 50px;
+    width: 400px;
+  }
+  &__right-side {
+    background-color: #f7e4e6;
+    width: 450px;
+    display: flex;
+    align-items: center;
+    margin-top: -1rem;
+    margin-bottom: -1rem;
+    margin-right: -1rem;
+  }
+  &__title {
+    h2 {
+      color: var(--primary-color);
+      font-weight: 800;
+    }
+    h3 {
+      font-weight: normal;
+    }
+  }
+}

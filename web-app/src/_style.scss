@@ -1,0 +1,13 @@
+@import './variables';
+@import "./layouts/style";
+@import "./pages/style";
+
+
+a, .navbar-light .navbar-nav .nav-link {
+  color:  var(--primary-color);
+  text-decoration: none;
+  cursor: pointer;
+  &:hover {
+    color: var(--primary-color--darker-2)
+  }
+}

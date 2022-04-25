@@ -1,0 +1,31 @@
+#ecommerce-authentication-layout {
+  height: 100vh;
+  .navbar-nav {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .btn-primary {
+    background-color: var(--primary-color);
+    border: none;
+    &:hover {
+      background-color: var(--primary-color--darker-1);
+    }
+  }
+}
+
+.ecommerce-auth-layout {
+  &__container {
+
+    .card {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      margin-top: -52px;
+      min-width: 400px;
+    }
+
+  }
+}

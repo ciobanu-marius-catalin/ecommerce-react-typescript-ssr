@@ -1,0 +1,33 @@
+{
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:jsx-a11y/recommended",
+        "plugin:prettier/recommended"
+    ],
+    "parser": "@babel/eslint-parser",
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "requireConfigFile": false,
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true
+    },
+    "rules": {
+        "react/prop-types": 0,
+        "react/react-in-jsx-scope": "off",
+        "prettier/prettier": "error"
+    }
+}

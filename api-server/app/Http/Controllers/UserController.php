@@ -1,0 +1,113 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Models\User;
+
+
+class UserController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     */
+    public function index(Request $request)
+    {
+        $page = $request->input('page', 1);
+        $perPage = $request->input('perPage', 10);
+
+        $users = User::latest()->paginate($perPage);
+        $serializedData = $users->toArray();
+        $result = [
+            'data' => $serializedData['data'],
+            'nrOfPages' => $serializedData['last_page']
+        ];
+        return response()->json($result);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create(Request $request)
+    {
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:users|',
+            'email' => 'required|unique:users|email',
+        ]);
+
+       $user = User::create($request->all());
+
+        return response()->json($user, 200);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return response()->json($user, 200);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $id = $user->id;
+        $data = $request->all();
+        $request->validate([
+            'name' => 'required|unique:users,name,' . $id,
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
+
+
+        $user->update($request->all());
+
+        return response()->json($user, 200);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        //
+        $user->delete();
+        return response()->json(null, 204);
+    }
+}
