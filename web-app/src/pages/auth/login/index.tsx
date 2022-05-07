@@ -10,6 +10,7 @@ function LoginPage(): React.ReactNode {
   const router = useRouter();
   const { user } = useUserContext();
   useEffect(() => {
+    console.log("mounted login  page");
     if (user) {
       router.push("/");
     }

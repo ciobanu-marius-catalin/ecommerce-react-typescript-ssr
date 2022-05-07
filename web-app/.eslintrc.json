@@ -11,7 +11,8 @@
     "@typescript-eslint",
     "react",
     "jsx-a11y",
-    "prettier"
+    "prettier",
+    "testing-library"
   ],
   "parserOptions": {
     "ecmaVersion": 2018,
@@ -37,5 +38,15 @@
       "pragma": "React",
       "version": "detect"
     }
-  }
+  },
+  "overrides": [
+    // Only uses Testing Library lint rules in test files
+    {
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": ["plugin:testing-library/react"]
+    }
+  ]
 }

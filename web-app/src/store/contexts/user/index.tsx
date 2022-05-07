@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
+
 import { UserInterface } from "@/repositories";
 import _ from "lodash";
 import { useDeepMemo } from "@/core";
@@ -48,6 +49,7 @@ function UserContextProvider({ children }: UserContextProviderProps) {
   const repository: UserRepositoryInterface = useUserRepository();
 
   const loadUser = useCallback(async () => {
+    return;
     const user: UserInterface = getSavedUser();
     const userId = user?.id;
     if (!userId) {
@@ -66,7 +68,6 @@ function UserContextProvider({ children }: UserContextProviderProps) {
       user,
       setUser,
       loadUser,
-      saveUserInLocalStorage,
     };
   }, [user, setUser]);
 

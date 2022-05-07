@@ -26,8 +26,8 @@ function useAuth() {
   const logout = async () => {
     try {
       setUser(null);
-      await router.push("/login");
       await axios.post(`/logout`);
+      await router.push("/login");
     } catch (e) {
       console.error(e);
     }
