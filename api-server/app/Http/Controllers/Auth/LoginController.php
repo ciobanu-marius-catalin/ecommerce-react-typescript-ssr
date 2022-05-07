@@ -35,8 +35,16 @@ class LoginController extends Controller
          * We are authenticating a request from a 3rd party.
          */
         else {
-           return response()->json(['error' => 'Unauthenticated.'], 401);
+           return response()->json([], 404);
         }
+
+        $user  = Auth::user();
+        $userId;
+        if($user) {
+            $userId = $user->id;
+        }
+
+        return response()->json(['userId' => $userId]);
     }
 
     private function authenticateFrontend()
@@ -51,7 +59,6 @@ class LoginController extends Controller
             ]);
         }
 
-        return response()->json(['success' => true], 200);
     }
 
 }

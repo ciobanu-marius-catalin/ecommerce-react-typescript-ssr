@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NextPage } from "next";
 import { ReactElement, ReactNode } from "react";
+import { UserContextProvider } from "@/store";
 import "../src/_style.scss";
 
 type NextPageWithLayout = NextPage & {
@@ -16,7 +17,13 @@ type AppPropsWithLayout = AppProps & {
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(<Component {...pageProps} />);
+  return (
+    <AppWithStore>{getLayout(<Component {...pageProps} />)} </AppWithStore>
+  );
+}
+
+function AppWithStore({ children }) {
+  return <UserContextProvider>{children}</UserContextProvider>;
 }
 
 export default MyApp;

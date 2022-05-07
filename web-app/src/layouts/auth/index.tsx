@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import { ReactElement, ReactNode } from "react";
 import { Navbar, Container, Nav } from "react-bootstrap";
-import Link from "next/link";
+import { Header } from "../common";
 
 interface BasicProps {
   children: ReactNode;
@@ -17,27 +17,6 @@ function AuthenticationLayout(children: ReactElement): ReactElement {
   );
 }
 
-function Header(): ReactElement {
-  return (
-    <Navbar bg="light" variant="light">
-      <Container>
-        <Link href="/">
-          <Navbar.Brand href="/">Ecommerce</Navbar.Brand>
-        </Link>
-
-        <Nav className="me-auto">
-          <Link href="/login" passHref>
-            <Nav.Link>Login</Nav.Link>
-          </Link>
-          <Link href="/register" passHref>
-            <Nav.Link>Register</Nav.Link>
-          </Link>
-        </Nav>
-      </Container>
-    </Navbar>
-  );
-}
-
 function Content({ children }: BasicProps): ReactElement {
   return (
     <Container className="ecommerce-auth-layout__container">
@@ -48,4 +27,4 @@ function Content({ children }: BasicProps): ReactElement {
   );
 }
 
-export { AuthenticationLayout };
+export { AuthenticationLayout, Header };

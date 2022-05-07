@@ -1,9 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AuthenticationLayout } from "../../../layouts";
 import Image from "next/image";
 import { LoginForm } from "./login-form";
 
+import { useRouter } from "next/router";
+import { useUserContext } from "@/store";
+
 function LoginPage(): React.ReactNode {
+  const router = useRouter();
+  const { user } = useUserContext();
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, []);
+
   return (
     <div className="ecommerce-login-page">
       <div className="ecommerce-login-page__left-side">

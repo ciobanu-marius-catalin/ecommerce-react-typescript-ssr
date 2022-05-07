@@ -5,39 +5,28 @@ import { axios } from "../../../core";
 import { Button, Form } from "react-bootstrap";
 import Link from "next/link";
 import { useFormData, UseFormDataReturnType } from "./use-form-data";
+import { useAuth } from "../../../repositories";
+import { useDeepCallback } from "@/core";
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
-// const baseUrl =
-//   "http://127.0.0.1/personal/ecommerce-react-typescript-ssr/api-server/public";
-// const baseUrl = "http://ecommerce";
-const baseUrl =
-  "http://localhost/personal/ecommerce-react-typescript-ssr/api-server/public";
+
 function LoginForm(): ReactElement {
   const { form, getFormData }: UseFormDataReturnType = useFormData();
-  const router = useRouter();
 
-  const csrf = () => axios.get(`${baseUrl}/sanctum/csrf-cookie`);
+  const { login } = useAuth();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const users = await axios.get(`${baseUrl}/api/admin/users`);
-      console.log(users);
-    };
-    fetchData();
-  }, []);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const users = await axios.get(`${baseUrl}/api/admin/users`);
+  //     console.log(users);
+  //   };
+  //   fetchData();
+  // }, []);
 
   const onSubmit: OnSubmitType = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      try {
-        await csrf();
-        const data = await axios.post(`${baseUrl}/api/login`, form);
-
-        console.log("redirect", users);
-        //await router.push("/");
-      } catch (e) {
-        console.error(e);
-      }
+      login(form);
     },
     [JSON.stringify(form)]
   );
