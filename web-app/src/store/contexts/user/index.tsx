@@ -36,6 +36,7 @@ function useUserContext() {
 
 function UserContextProvider({ children }: UserContextProviderProps) {
   const defaultUser = getSavedUser();
+
   const [user, setInternalUser] = useState<UserInterface>(defaultUser);
 
   const setUser = useCallback(
