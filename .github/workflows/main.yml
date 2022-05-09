@@ -19,6 +19,7 @@ jobs:
               with:
                   node-version: 14.x
             - name: npm ci
+              working-directory: ./web-app
               run: npm ci
             - name: test
               working-directory: ./web-app
