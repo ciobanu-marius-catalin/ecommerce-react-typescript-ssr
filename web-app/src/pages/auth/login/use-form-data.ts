@@ -1,5 +1,6 @@
-import { useState } from "react";
-import _ from "lodash";
+import { useState } from 'react';
+
+import _ from 'lodash';
 
 interface FormType {
   email: string;
@@ -24,8 +25,8 @@ export interface UseFormDataReturnType {
 
 function useFormData(): UseFormDataReturnType {
   const [form, setForm] = useState<FormType>({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   });
   const setValue: SetValueType = (path: string) => (newValue: string) => {
     const newForm = _.cloneDeep(form);

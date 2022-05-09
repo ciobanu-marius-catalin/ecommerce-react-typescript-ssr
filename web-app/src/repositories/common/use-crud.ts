@@ -1,5 +1,5 @@
-import { useCallback, useMemo } from "react";
-import { axios } from "@/core";
+import { useCallback, useMemo } from 'react';
+import { axios } from '@/core';
 
 export interface CrudRepositoryInterface<Type> {
   getItem: (id: string | number) => Promise<Type | undefined>;

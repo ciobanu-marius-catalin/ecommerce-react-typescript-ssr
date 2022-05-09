@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { AuthenticationLayout } from "../src";
+import { AuthenticationLayout } from '../src';
 
 function RegisterPage(): React.ReactNode {
   return <h1>Register page</h1>;

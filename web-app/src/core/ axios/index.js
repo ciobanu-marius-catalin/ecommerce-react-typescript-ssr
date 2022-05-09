@@ -1,4 +1,4 @@
-import { axios } from "./instance";
-import "./csrf-interceptor";
+import { axios } from './instance';
+import './csrf-interceptor';
 
 export { axios };

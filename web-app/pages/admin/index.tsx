@@ -1,3 +1,3 @@
-import { DashboardHome } from "@/pages";
+import { DashboardHome } from '@/pages';
 
 export default DashboardHome;

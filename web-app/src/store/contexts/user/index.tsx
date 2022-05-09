@@ -4,19 +4,19 @@ import React, {
   useState,
   useEffect,
   useCallback,
-} from "react";
+} from 'react';
 
-import { UserInterface } from "@/repositories";
-import _ from "lodash";
-import { useDeepMemo } from "@/core";
-import { useUserRepository, UserRepositoryInterface } from "@/repositories";
+import { UserInterface } from '@/repositories';
+import _ from 'lodash';
+import { useDeepMemo } from '@/core';
+import { useUserRepository, UserRepositoryInterface } from '@/repositories';
 
 interface UserContextProviderProps {
   children: ReactElement;
 }
 
 interface defaultContextInterface {
-  user: UserInterface;
+  user: UserInterface | null;
   setContext: Function;
   loadUser: Function;
 }
@@ -80,20 +80,20 @@ function UserContextProvider({ children }: UserContextProviderProps) {
   );
 }
 function saveUserInLocalStorage(user: UserInterface) {
-  if (typeof window === "undefined" || !user) {
+  if (typeof window === 'undefined' || !user) {
     return null;
   }
   if (user) {
-    localStorage.setItem("user", JSON.stringify(user));
+    localStorage.setItem('user', JSON.stringify(user));
   } else {
-    localStorage.removeItem("user");
+    localStorage.removeItem('user');
   }
 }
 function getSavedUser() {
-  if (typeof window === "undefined") {
+  if (typeof window === 'undefined') {
     return null;
   }
-  const user: UserInterface = localStorage.getItem("user");
+  const user: UserInterface = localStorage.getItem('user');
   if (!user) {
     return null;
   }

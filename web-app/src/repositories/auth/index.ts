@@ -1,6 +1,6 @@
-import { axios } from "../../core";
-import { useRouter } from "next/router";
-import { useUserContext } from "@/store";
+import { axios } from '../../core';
+import { useRouter } from 'next/router';
+import { useUserContext } from '@/store';
 
 function useAuth() {
   const router = useRouter();
@@ -17,7 +17,7 @@ function useAuth() {
         setUser(user);
         loadUser();
       }
-      await router.push("/");
+      await router.push('/');
     } catch (e) {
       console.error(e);
     }
@@ -27,7 +27,7 @@ function useAuth() {
     try {
       setUser(null);
       await axios.post(`/logout`);
-      await router.push("/login");
+      await router.push('/login');
     } catch (e) {
       console.error(e);
     }

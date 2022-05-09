@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useMemo } from "react";
-import _ from "lodash";
+import { useCallback, useEffect, useRef, useMemo } from 'react';
+import _ from 'lodash';
 
 const useDeepCompareMemoize = (value = []) => {
   const ref = useRef([]);

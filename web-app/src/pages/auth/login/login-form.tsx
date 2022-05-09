@@ -1,12 +1,12 @@
-import { useRouter } from "next/router";
-import React, { ReactElement, useCallback, useEffect } from "react";
-import { axios } from "../../../core";
+import { useRouter } from 'next/router';
+import React, { ReactElement, useCallback, useEffect } from 'react';
+import { axios } from '../../../core';
 // import axios from "axios";
-import { Button, Form } from "react-bootstrap";
-import Link from "next/link";
-import { useFormData, UseFormDataReturnType } from "./use-form-data";
-import { useAuth } from "../../../repositories";
-import { useDeepCallback } from "@/core";
+import { Button, Form } from 'react-bootstrap';
+import Link from 'next/link';
+import { useFormData, UseFormDataReturnType } from './use-form-data';
+import { useAuth } from '../../../repositories';
+import { useDeepCallback } from '@/core';
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
@@ -37,7 +37,7 @@ function LoginForm(): ReactElement {
         <Form.Control
           type="email"
           placeholder="Enter email address"
-          {...getFormData("email")}
+          {...getFormData('email')}
         />
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
@@ -45,7 +45,7 @@ function LoginForm(): ReactElement {
         <Form.Control
           type="password"
           placeholder="Enter password"
-          {...getFormData("password")}
+          {...getFormData('password')}
         />
       </Form.Group>
 
@@ -62,7 +62,7 @@ function LoginForm(): ReactElement {
 
       <Form.Group className="d-flex justify-content-center">
         <span>Don't have an account? </span>
-        <Link href={"/register"} passHref>
+        <Link href={'/register'} passHref>
           <a href="#">
             <strong className="px-3">Sign up</strong>
           </a>

@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useAuth } from "../../../repositories";
+import { useEffect } from 'react';
+import { useAuth } from '../../../repositories';
 
 function LogoutPage() {
   const { logout } = useAuth();
   useEffect(() => {
-    console.log("Mounted logout");
+    console.log('Mounted logout');
     logout();
   }, []);
 

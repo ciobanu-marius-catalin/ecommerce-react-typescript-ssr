@@ -1,4 +1,4 @@
-import { useCrud, CrudRepositoryInterface } from "../common";
+import { useCrud, CrudRepositoryInterface } from '../common';
 
 export interface UserInterface {
   id: number;
@@ -9,7 +9,7 @@ export type UserRepositoryInterface = CrudRepositoryInterface<UserInterface>;
 
 function useUserRepository(): UserRepositoryInterface {
   const routes: UserRepositoryInterface =
-    useCrud<UserInterface>("/admin/users");
+    useCrud<UserInterface>('/admin/users');
   return routes;
 }
 
