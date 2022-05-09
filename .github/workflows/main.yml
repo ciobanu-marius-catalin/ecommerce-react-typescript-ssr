@@ -33,4 +33,5 @@ jobs:
               working-directory: ./web-app 
               run: npm run typescript
             - name: build
+              working-directory: ./web-app
               run: npm run build --if-present
