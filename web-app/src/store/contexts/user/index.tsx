@@ -29,8 +29,7 @@ const defaultContext: defaultContextInterface = {
 const UserContext = React.createContext(defaultContext);
 
 function useUserContext() {
-  const context =
-      useContext(UserContext);
+  const context = useContext(UserContext);
 
   return context;
 }
@@ -82,7 +81,7 @@ function UserContextProvider({ children }: UserContextProviderProps) {
   );
 }
 function saveUserInLocalStorage(user: UserInterface) {
-  if (typeof window === 'undefined' || !user) {
+  if (typeof window === 'undefined') {
     return null;
   }
   if (user) {

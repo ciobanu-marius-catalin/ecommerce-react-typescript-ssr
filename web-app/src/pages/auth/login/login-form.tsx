@@ -1,19 +1,22 @@
 import { useRouter } from 'next/router';
-import React, { ReactElement, useCallback, useEffect } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import { axios } from '../../../core';
 // import axios from "axios";
-import { Button, Form } from 'react-bootstrap';
+import { Alert, Button, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import { useFormData, UseFormDataReturnType } from './use-form-data';
 import { useAuth } from '../../../repositories';
 import { useDeepCallback } from '@/core';
+import { useErrorCatcher } from '@/core';
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
 function LoginForm(): ReactElement {
+  const [validated, setValidated] = useState(false);
   const { form, getFormData }: UseFormDataReturnType = useFormData();
-
+  const { error, getValidationError } = useErrorCatcher();
   const { login } = useAuth();
+  const { errorMessage } = error || {};
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -27,18 +30,24 @@ function LoginForm(): ReactElement {
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       login(form);
+      setValidated(true);
     },
     [JSON.stringify(form)]
   );
   return (
     <Form onSubmit={onSubmit}>
+      {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
         <Form.Control
           type="email"
           placeholder="Enter email address"
           {...getFormData('email')}
+          isInvalid={!!getValidationError('email')}
         />
+        <Form.Control.Feedback type="invalid">
+          {getValidationError('email')}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
@@ -46,7 +55,11 @@ function LoginForm(): ReactElement {
           type="password"
           placeholder="Enter password"
           {...getFormData('password')}
+          isInvalid={!!getValidationError('email')}
         />
+        <Form.Control.Feedback type="invalid">
+          {getValidationError('password')}
+        </Form.Control.Feedback>
       </Form.Group>
 
       <Form.Group className="mb-3 d-flex justify-content-between align-items-center">

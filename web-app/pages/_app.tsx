@@ -5,9 +5,10 @@ import { NextPage } from 'next';
 import { ReactElement, ReactNode, useEffect } from 'react';
 import { UserContextProvider } from '@/store';
 import '../src/_style.scss';
+import { ErrorCatcher } from '@/core';
 
 type NextPageWithLayout = NextPage & {
-  getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactNode) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
@@ -26,7 +27,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 }
 
 function AppWithStore({ children }) {
-  return <UserContextProvider>{children}</UserContextProvider>;
+  return (
+    <UserContextProvider>
+      <ErrorCatcher>{children}</ErrorCatcher>
+    </UserContextProvider>
+  );
 }
 
 export default MyApp;

@@ -1,13 +1,16 @@
 import { Card } from 'react-bootstrap';
-import { ReactElement, ReactNode } from 'react';
+import { ReactElement, ReactNode, useEffect } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Header } from '../common';
+import { useRouter } from 'next/router';
+import { useUserContext } from '@/store';
 
 interface BasicProps {
   children: ReactNode;
 }
 
 function AuthenticationLayout(children: ReactElement): ReactElement {
+
   console.log('AuthenticationLayout');
   return (
     <div id={'ecommerce-authentication-layout'}>
@@ -19,7 +22,7 @@ function AuthenticationLayout(children: ReactElement): ReactElement {
 
 function Content({ children }: BasicProps): ReactElement {
   return (
-    <Container className='ecommerce-auth-layout__container'>
+    <Container className="ecommerce-auth-layout__container">
       <Card>
         <Card.Body>{children}</Card.Body>
       </Card>
