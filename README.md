@@ -1,6 +1,6 @@
 # Ecommerce demo application using next.js and laravel
 
-## :warning: **Work in progress**
+## :warning: **Work in progress** :warning:
 
 ## Description :clipboard:
 This is an application build with various best practices and technologies to 
