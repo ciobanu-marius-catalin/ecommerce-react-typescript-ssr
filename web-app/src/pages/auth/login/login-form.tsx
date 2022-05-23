@@ -40,6 +40,7 @@ function LoginForm(): ReactElement {
   return (
     <Form onSubmit={onSubmit}>
       {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
+
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -52,6 +53,7 @@ function LoginForm(): ReactElement {
           {getValidationError('email')}
         </Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
         <Form.Control
