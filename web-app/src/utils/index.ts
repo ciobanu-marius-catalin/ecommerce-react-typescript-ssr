@@ -16,4 +16,12 @@ function useCurrentUser() {
   };
 }
 
-export { useCurrentUser };
+function noopNull(): null {
+  return null;
+}
+
+function isServerSide(): boolean {
+  return typeof window === 'undefined';
+}
+
+export { useCurrentUser, noopNull, isServerSide };

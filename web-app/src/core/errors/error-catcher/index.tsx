@@ -10,13 +10,14 @@ import React, {
 } from 'react';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
+import { noopNull } from '@utils';
 
 interface ValidationErrorInterface {
   [key: string]: Array<string>;
 }
 
 interface ErrorInterface {
-  validationError?: ValidationErrorInterface | null;
+  validationErrors?: ValidationErrorInterface | null;
   errorMessage?: string | null;
   statusCode?: number | null;
 }
@@ -25,20 +26,20 @@ interface ErrorCatcherContextInterface {
   error: ErrorInterface | null;
   setError: Function;
   clearError: Function;
-  getValidationError: ((propertyName: string) => string) | (() => void);
+  getValidationError: ((propertyName: string) => string) | (() => null);
 }
 
 const defaultErrorValue: ErrorInterface = {
   errorMessage: null,
   statusCode: null,
-  validationError: null,
+  validationErrors: null,
 };
 
 const defaultValue: ErrorCatcherContextInterface = {
   error: defaultErrorValue,
-  setError: _.noop,
-  clearError: _.noop,
-  getValidationError: _.noop,
+  setError: noopNull,
+  clearError: noopNull,
+  getValidationError: noopNull,
 };
 
 const ErrorCatcherContext = createContext(defaultValue);
@@ -58,7 +59,7 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, [error]);
 
   const setError = useCallback(
-    (e) => {
+    (e: any) => {
       const response = e?.response;
       const data = response?.data;
       const newError: ErrorInterface = {
@@ -66,7 +67,7 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
         errorMessage: data?.message,
       };
       if (response?.status === 422) {
-        newError.validationError = data?.errors;
+        newError.validationErrors = data?.errors;
       }
       setInternalError(newError);
     },
@@ -80,7 +81,7 @@ const ErrorCatcher: React.FC<{ children: ReactNode }> = ({ children }) => {
   const getValidationError: (x: string) => string = useCallback(
     (propertyName) => {
       //The validation errors are returned as an array. We will only display the first one
-      return _.get(error, ['validationError', propertyName, 0]);
+      return _.get(error, ['validationErrors', propertyName, 0]);
     },
     [error]
   );

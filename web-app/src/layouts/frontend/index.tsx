@@ -19,7 +19,7 @@ function FrontendLayout(children: ReactElement): ReactElement {
 
 function Content({ children }: BasicProps): ReactElement {
   return (
-    <Container className='ecommerce-frontend-layout__container'>
+    <Container className="ecommerce-frontend-layout__container">
       {children}
     </Container>
   );

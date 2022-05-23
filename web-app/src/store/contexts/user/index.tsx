@@ -6,10 +6,10 @@ import React, {
   useCallback,
 } from 'react';
 
-import { UserInterface } from '@/repositories';
+import { UserInterface } from '@repositories';
 import _ from 'lodash';
-import { useDeepMemo } from '@/core';
-import { useUserRepository, UserRepositoryInterface } from '@/repositories';
+import { useDeepMemo } from '@core';
+import { useUserRepository, UserRepositoryInterface } from '@repositories';
 
 interface UserContextProviderProps {
   children: ReactElement;

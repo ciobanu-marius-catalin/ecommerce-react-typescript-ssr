@@ -1,12 +1,12 @@
 import { axios } from '../../core';
 import { useRouter } from 'next/router';
-import { useUserContext } from '@/store';
-import { useErrorCatcher } from '@/core';
+import { useUserContext } from '@store';
+import { useErrorCatcher } from '@core';
 
 function useAuth() {
   const router = useRouter();
-  const { setError, clearError} = useErrorCatcher();
-  const { loadUser, saveUserInLocalStorage, setUser } = useUserContext();
+  const { setError, clearError } = useErrorCatcher();
+  const { loadUser, setUser } = useUserContext();
   const login = async (data) => {
     try {
       clearError();
@@ -19,7 +19,6 @@ function useAuth() {
         };
         setUser(user);
         loadUser();
-
       }
       await router.push('/');
     } catch (e) {
@@ -44,6 +43,7 @@ function useAuth() {
     try {
       clearError();
       await axios.post(`/register`, data);
+      await router.push('/login');
     } catch (e) {
       setError(e);
       console.error(e);

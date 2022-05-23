@@ -3,9 +3,9 @@ import type { AppProps } from 'next/app';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { NextPage } from 'next';
 import { ReactElement, ReactNode, useEffect } from 'react';
-import { UserContextProvider } from '@/store';
+import { UserContextProvider } from '@store';
 import '../src/_style.scss';
-import { ErrorCatcher } from '@/core';
+import { ErrorCatcher } from '@core';
 
 type NextPageWithLayout = NextPage & {
   getLayout?: (page: ReactNode) => ReactNode;

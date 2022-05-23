@@ -1,4 +1,4 @@
-import { FrontendLayout } from '@/layouts';
+import { FrontendLayout } from '@layouts';
 
 const HomePage = () => {
   return (

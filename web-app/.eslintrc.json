@@ -33,7 +33,8 @@
     "prettier/prettier": "error",
     "react-hooks/exhaustive-deps": "warn",
     "react-hooks/rules-of-hooks": "warn",
-    "@typescript-eslint/ban-types": "off"
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/ban-ts-comment": "off"
   },
   "settings": {
     "react": {
@@ -51,6 +52,7 @@
       "extends": ["plugin:testing-library/react"],
       "rules": {
         "@typescript-eslint/ban-types": "off",
+        "@typescript-eslint/ban-ts-comment": "off",
         "prettier/prettier": ["error", {"singleQuote": true}]
       }
     }

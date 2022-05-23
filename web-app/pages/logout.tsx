@@ -1,3 +1,3 @@
-import { LogoutPage } from '@/pages';
+import { LogoutPage } from '@pages';
 
 export default LogoutPage;

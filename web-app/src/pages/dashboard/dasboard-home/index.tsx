@@ -1,5 +1,5 @@
-import { DashboardLayout } from '@/layouts';
-import { axios } from '@/core';
+import { DashboardLayout } from '@layouts';
+import { axios } from '@core';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 

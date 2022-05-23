@@ -10,36 +10,54 @@ import {
   useDeepCallback,
   useErrorCatcher,
 } from '@core';
-import { useAuth } from '../../../repositories';
+import { useAuth } from '@repositories';
 
 interface FormType {
+  name: string;
   email: string;
   password: string;
+  password_confirmation: string;
 }
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
-function LoginForm(): ReactElement {
+function RegisterForm(): ReactElement {
   const defaultFormData: FormType = {
+    name: '',
     email: '',
     password: '',
+    password_confirmation: '',
   };
   const { form, getFormData }: UseFormDataReturnType<FormType> =
     useFormData<FormType>(defaultFormData);
   const { error, getValidationError } = useErrorCatcher();
-  const { login } = useAuth();
+  const { register } = useAuth();
   const { errorMessage } = error || {};
 
   const onSubmit: OnSubmitType = useDeepCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      login(form);
+      register(form);
     },
     [form]
   );
   return (
     <Form onSubmit={onSubmit}>
       {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
+
+      <Form.Group className="mb-3" controlId="name">
+        <Form.Label>Name</Form.Label>
+        <Form.Control
+          type="text"
+          placeholder="Enter name"
+          {...getFormData('name')}
+          isInvalid={!!getValidationError('name')}
+        />
+        <Form.Control.Feedback type="invalid">
+          {getValidationError('name')}
+        </Form.Control.Feedback>
+      </Form.Group>
+
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -52,6 +70,7 @@ function LoginForm(): ReactElement {
           {getValidationError('email')}
         </Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
         <Form.Control
@@ -65,27 +84,26 @@ function LoginForm(): ReactElement {
         </Form.Control.Feedback>
       </Form.Group>
 
+      <Form.Group className="mb-3" controlId="password_confirmation">
+        <Form.Label>Password</Form.Label>
+        <Form.Control
+          type="password"
+          placeholder="Confirm password"
+          {...getFormData('password_confirmation')}
+          isInvalid={!!getValidationError('password_confirmation')}
+        />
+        <Form.Control.Feedback type="invalid">
+          {getValidationError('password_confirmation')}
+        </Form.Control.Feedback>
+      </Form.Group>
+
       <Form.Group className="mb-3 d-flex justify-content-between align-items-center">
         <Button variant="primary" type="submit" className="w-100">
-          Login
+          Register
         </Button>
-      </Form.Group>
-
-      <Form.Group className="mb-5 d-flex justify-content-between align-items-center">
-        <Form.Check type="checkbox" id="custom-switch" label="Remember Me" />
-        <Link href={`/forgot-password`}>Forgot password</Link>
-      </Form.Group>
-
-      <Form.Group className="d-flex justify-content-center">
-        <span>Don't have an account? </span>
-        <Link href={'/register'} passHref>
-          <a href="#">
-            <strong className="px-3">Sign up</strong>
-          </a>
-        </Link>
       </Form.Group>
     </Form>
   );
 }
 
-export { LoginForm };
+export { RegisterForm };
