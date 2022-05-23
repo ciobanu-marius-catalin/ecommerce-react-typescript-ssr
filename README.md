@@ -1,26 +1,23 @@
-# Next JS Application
+# Ecommerce demo application using next.js and laravel
 
 ## Description :clipboard:
-> A Next JS Application Demo.
-
-
-
-## Common Commands :computer:
-
-1. `dev` Starts local development server at [http://localhost:3000](http://localhost:3000)
-2. `build` Runs build
-3. `start` Runs next js server
+> This is an application build with various best practices and technologies to 
+> show my coding style and knowledge. The purpose of the application is to create
+> a simple CRUD application that uses a modern tech stack
 
 ## Built With :zap:
 
 1. React.js
 2. Typescript
 3. Next.js
-4. Laravel
-5. Context API
-6. React hooks
-7. ES11
-8. Eslint
+4. SSR
+5. Laravel
+6. Context API
+7. React hooks
+8. ES11
+9. Eslint
+10. SCSS
+11. CSS BEM
 
 
 
