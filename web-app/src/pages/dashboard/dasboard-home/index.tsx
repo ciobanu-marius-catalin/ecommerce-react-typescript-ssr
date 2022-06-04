@@ -9,7 +9,7 @@ const DashboardHome = () => {
   const fetch = async () => {
     try {
       const data = await axios.get('/admin/posts');
-      setPosts(data?.data);
+      setPosts(data?.data?.data);
     } catch (e) {
       if (e?.errorCode === 401) {
         router.push('/logout');
@@ -24,7 +24,6 @@ const DashboardHome = () => {
   return (
     <div>
       <h1>Hello world dashboard</h1>
-      {posts}
     </div>
   );
 };

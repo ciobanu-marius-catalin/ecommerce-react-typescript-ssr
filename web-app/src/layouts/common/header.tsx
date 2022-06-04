@@ -26,9 +26,14 @@ function Header(): ReactElement {
             </>
           )}
           {user && (
-            <Link href="/logout" passHref>
-              <Nav.Link>Logout</Nav.Link>
-            </Link>
+            <>
+              <Link href="/admin/products" passHref>
+                <Nav.Link>Products</Nav.Link>
+              </Link>
+              <Link href="/logout" passHref>
+                <Nav.Link>Logout</Nav.Link>
+              </Link>
+            </>
           )}
         </Nav>
       </Container>

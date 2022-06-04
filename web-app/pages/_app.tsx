@@ -16,9 +16,6 @@ type AppPropsWithLayout = AppProps & {
 };
 
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  useEffect(() => {
-    console.log('my app mounted');
-  }, []);
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
@@ -28,9 +25,9 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
 
 function AppWithStore({ children }) {
   return (
-    <UserContextProvider>
-      <ErrorCatcher>{children}</ErrorCatcher>
-    </UserContextProvider>
+    <ErrorCatcher>
+      <UserContextProvider>{children}</UserContextProvider>
+    </ErrorCatcher>
   );
 }
 

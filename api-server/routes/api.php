@@ -13,10 +13,11 @@ Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::resource('admin/users', 'App\Http\Controllers\UserController');
+    Route::resource('admin/products', 'App\Http\Controllers\ProductController');
 });
 
-Route::resource('admin/posts', 'App\Http\Controllers\PostController');
-
+Route::get('/products', [PostController::class, 'index']);
+Route::get('/products/{post}', [PostController::class, 'show']);
 
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{post}', [PostController::class, 'show']);
