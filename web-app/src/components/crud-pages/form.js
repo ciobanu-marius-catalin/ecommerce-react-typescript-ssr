@@ -22,7 +22,7 @@ import { axios } from '@core';
 import { useRouter } from 'next/router';
 
 const CrudForm_ = (props) => {
-  console.log('crud form');
+
   const [submitted, setSubmitted] = useState(false);
   const { settings = [], method = 'post', loadData, onBeforeSubmit, listApiPath } = props;
   const { apiPath } = useCrudContext();
@@ -82,7 +82,7 @@ const CrudForm_ = (props) => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    console.log('on submit');
+
     let path = `${apiPath}`;
     let data = formData;
     if (onBeforeSubmit) {

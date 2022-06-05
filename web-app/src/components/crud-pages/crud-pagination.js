@@ -35,7 +35,6 @@ function CrudTablePagination({
     return items;
   }
 
-  console.log('crud table');
 
   function getComplexPagination() {
     const ELLIPSIS_ELEMENT = 'ellipsisElement';
@@ -59,7 +58,7 @@ function CrudTablePagination({
       nrOfRightItems -= difference;
     }
     let indexes = [];
-    console.log('crud table');
+
     let currentActivePage = activePage - nrOfLeftItems;
     for (let i = 0; i < nrOfLeftItems; i++) {
       let index = currentActivePage++;

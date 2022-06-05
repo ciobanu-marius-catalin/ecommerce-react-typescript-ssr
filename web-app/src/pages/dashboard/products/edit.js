@@ -7,15 +7,11 @@ const editSettings = settings;
 
 const ProductsPageEdit = () => {
   const router = useRouter();
-  let fullPath = router.asPath;
-  let id = useMemo(() => {
-    try {
-      let search = fullPath.split('?')[1];
-      const urlSearchParams = new URLSearchParams(search);
-      id = urlSearchParams.get('id');
-      return id;
-    } catch (e) {}
-  }, [fullPath]);
+  const { id } = router.query;
+
+  if (!id) {
+    return <></>;
+  }
 
   let localApiPath = `/admin/products/${id}`;
   return (

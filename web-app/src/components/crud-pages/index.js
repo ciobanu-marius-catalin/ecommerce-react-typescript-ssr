@@ -21,7 +21,7 @@ function CrudTable_({ columnNames = [], perPage = 10 } = {}) {
   });
 
   let Content;
-  console.log('crud page index');
+
 
   if (isLoading) {
     Content = LoadingTableContent;

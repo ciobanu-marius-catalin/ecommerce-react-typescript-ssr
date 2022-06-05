@@ -1,3 +1,3 @@
 export * from './auth';
-export * from './frontend';
+export * from './front';
 export * from './dashboard';

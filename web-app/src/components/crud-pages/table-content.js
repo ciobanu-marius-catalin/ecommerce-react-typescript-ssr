@@ -16,14 +16,13 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
   const { setError } = useErrorCatcher();
   let currentRouterPath = location.pathname;
 
-  console.log('index');
 
   const onEdit = (item) => {
-    console.log('edit', item);
+
     const id = item?.id;
 
     let editRoute = `${currentRouterPath}/edit`;
-    router.push(`${editRoute}?id=${id}`);
+    router.push(`${editRoute}/${id}`);
   };
 
   const onDelete = (item) => {
@@ -44,7 +43,6 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
       setShowDeleteModal(false);
     }
 
-    console.log('delete', item);
   };
   const onCancelDelete = () => {
     setShowDeleteModal(false);

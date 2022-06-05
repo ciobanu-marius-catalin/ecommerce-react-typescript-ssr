@@ -8,7 +8,6 @@ function AuthRoute({ children }: { children: ReactNode }): ReactElement {
 
   //use useMemo instead of useEffect because I need to check before the first render so we don't do a render when it's not needed
   const routeOk = useMemo(() => {
-    console.log('mounted AuthRoutes');
     if (user) {
       router.push('/');
       return false;

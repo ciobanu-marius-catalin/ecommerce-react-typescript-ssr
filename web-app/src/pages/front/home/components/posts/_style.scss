@@ -1,0 +1,70 @@
+.gravity-post-item {
+    overflow: hidden;
+    background: white;
+    padding: 8px;
+
+    > a {
+        text-decoration: none;
+    }
+    &__container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    &__image-outer {
+        position: relative;
+        //16:9 aspect ratio
+        padding-top: 56.25%;
+        background: $imagePlaceholderColor;
+    }
+    &__image-aspect-ratio {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        overflow: hidden;
+    }
+    img {
+        transition: transform 0.5s linear;
+        width: 100%;
+        height: 100%;
+    }
+    &__title {
+        font-weight: 600;
+        color: rgb(29, 25, 41);
+        margin-top: 14px;
+        margin-bottom: 6px;
+        font-size: 14px;
+    }
+    &__price {
+        font-size: 20px;
+        color: var(--danger-color);
+        margin-bottom: 10px;
+    }
+    &:hover {
+        img {
+            transform: scale(1.05);
+        }
+    }
+
+    &--show-placeholder {
+        $textPlaceholderColor: rgb(227, 227, 227);
+        .gravity-post-item {
+            &__title {
+                height: 27px;
+                background: $textPlaceholderColor;
+            }
+            &__description {
+                height: 28px;
+                background: $textPlaceholderColor;
+            }
+        }
+    }
+}
+.post-list-page {
+    .infinite-scroll-component {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}

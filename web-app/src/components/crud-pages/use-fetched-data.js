@@ -13,7 +13,7 @@ function useFetchedData({ columnNames = [], perPage = 10, page = 1 }) {
   async function fetchData() {
     setIsLoading(true);
     try {
-      console.log('use fetched data');
+
       let fetchResult = await axios.get(apiPath, {
         params: {
           perPage,
@@ -40,7 +40,7 @@ function useFetchedData({ columnNames = [], perPage = 10, page = 1 }) {
       setIsLoading(false);
     }
 
-    console.log('fetch Data');
+
   }
 
   const refreshPage = () => {
