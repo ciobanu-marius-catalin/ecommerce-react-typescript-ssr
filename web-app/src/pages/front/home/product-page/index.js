@@ -7,7 +7,7 @@ import { FrontendLayout } from '@layouts';
 import { useRouter } from 'next/router';
 import { useProductRepository } from '../../../../repositories';
 
-function PostPage() {
+function ProductPage() {
   const { data } = useFetchData();
   let isPlaceholder = _.isEmpty(data);
 
@@ -102,6 +102,6 @@ function useFetchData({ setError = _.noop } = {}) {
   return { data, isLoading };
 }
 
-PostPage.getLayout = FrontendLayout;
+ProductPage.getLayout = FrontendLayout;
 
-export { PostPage };
+export { ProductPage };

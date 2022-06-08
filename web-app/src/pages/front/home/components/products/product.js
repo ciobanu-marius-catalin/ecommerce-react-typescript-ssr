@@ -4,7 +4,7 @@ import _ from 'lodash';
 import classnames from 'classnames';
 import Link from 'next/link';
 
-function Post({ data = {} }) {
+function Product({ data = {} }) {
   const { isPlaceholder } = data;
 
   const Content = isPlaceholder ? PlaceholderPost : PostContent;
@@ -20,22 +20,22 @@ function PostContent({ data = {} }) {
   const link = `/${id}`;
   return (
     <div
-      className={classnames('gravity-post-item', {
-        'gravity-post-item--show-placeholder': isPlaceholder,
+      className={classnames('product-list-page__item', {
+        'product-list-page__item--show-placeholder': isPlaceholder,
       })}
     >
-      <div className="gravity-post-item__container">
+      <div className="product-list-page__item__container">
         <Link href={link}>
           <a>
-            <div className="gravity-post-item__image-outer">
-              <div className="gravity-post-item__image-aspect-ratio">
+            <div className="product-list-page__item__image-outer">
+              <div className="product-list-page__item__image-aspect-ratio">
                 {url && <img src={url} alt="featured-image" />}
               </div>
             </div>
-            <h2 className="gravity-post-item__title">{title}</h2>
+            <h2 className="product-list-page__item__title">{title}</h2>
           </a>
         </Link>
-        <span className="gravity-post-item__price">{price} $</span>
+        <span className="product-list-page__item__price">{price} $</span>
         <Button>Add to cart</Button>
       </div>
     </div>
@@ -48,21 +48,21 @@ function PlaceholderPost({ data = {} }) {
   return (
     <div
       className={classnames(
-        'gravity-post-item',
-        'gravity-post-item--show-placeholder'
+        'product-list-page__item',
+        'product-list-page__item--show-placeholder'
       )}
     >
       <Link href={link}>
         <a>
-          <div className="gravity-post-item__image-outer">
-            <div className="gravity-post-item__image-aspect-ratio" />
+          <div className="product-list-page__item__image-outer">
+            <div className="product-list-page__item__image-aspect-ratio" />
           </div>
-          <h2 className="gravity-post-item__title" />
-          <p className="gravity-post-item__description" />
+          <h2 className="product-list-page__item__title" />
+          <p className="product-list-page__item__description" />
         </a>
       </Link>
     </div>
   );
 }
 
-export { Post };
+export { Product };

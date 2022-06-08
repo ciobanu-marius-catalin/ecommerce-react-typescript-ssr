@@ -22,9 +22,14 @@ import { axios } from '@core';
 import { useRouter } from 'next/router';
 
 const CrudForm_ = (props) => {
-
   const [submitted, setSubmitted] = useState(false);
-  const { settings = [], method = 'post', loadData, onBeforeSubmit, listApiPath } = props;
+  const {
+    settings = [],
+    method = 'post',
+    loadData,
+    onBeforeSubmit,
+    listApiPath,
+  } = props;
   const { apiPath } = useCrudContext();
   const { error, setError } = useErrorCatcher();
   const { errorMessage, validationErrors } = error || {};

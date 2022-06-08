@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import {axios} from '@core';
+import { axios } from '@core';
 import { useCrudContext } from './crud-context';
 import _ from 'lodash';
 import { useErrorCatcher } from '@core';
@@ -13,7 +13,6 @@ function useFetchedData({ columnNames = [], perPage = 10, page = 1 }) {
   async function fetchData() {
     setIsLoading(true);
     try {
-
       let fetchResult = await axios.get(apiPath, {
         params: {
           perPage,
@@ -39,8 +38,6 @@ function useFetchedData({ columnNames = [], perPage = 10, page = 1 }) {
     } finally {
       setIsLoading(false);
     }
-
-
   }
 
   const refreshPage = () => {

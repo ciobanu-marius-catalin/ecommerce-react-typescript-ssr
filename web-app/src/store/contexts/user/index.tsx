@@ -17,12 +17,12 @@ interface UserContextProviderProps {
 
 interface defaultContextInterface {
   user: UserInterface | null;
-  setContext: Function;
+  setUser: Function;
   loadUser: Function;
 }
 const defaultContext: defaultContextInterface = {
   user: null,
-  setContext: _.noop,
+  setUser: _.noop,
   loadUser: _.noop,
 };
 
@@ -57,9 +57,11 @@ function UserContextProvider({ children }: UserContextProviderProps) {
       return;
     }
 
+    // @ts-ignore
     const newUser: Promise<UserInterface | undefined> =
       await repository.getItem(userId);
     if (newUser) {
+      // @ts-ignore
       setUser(newUser);
     }
   }, [repository]);
@@ -70,7 +72,7 @@ function UserContextProvider({ children }: UserContextProviderProps) {
       setUser,
       loadUser,
     };
-  }, [user, setUser]);
+  }, [user, setUser, loadUser]);
 
   useEffect(() => {
     loadUser();

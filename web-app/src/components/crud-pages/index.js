@@ -22,7 +22,6 @@ function CrudTable_({ columnNames = [], perPage = 10 } = {}) {
 
   let Content;
 
-
   if (isLoading) {
     Content = LoadingTableContent;
   } else if (_.isEmpty(data)) {
@@ -87,4 +86,5 @@ function CrudTable(props = {}) {
 
 export * from './form';
 export * from './edit-page';
+export * from './crud-pagination';
 export { CrudTable };

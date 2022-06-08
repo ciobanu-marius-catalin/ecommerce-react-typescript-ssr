@@ -27,6 +27,9 @@ function Header(): ReactElement {
           )}
           {user && (
             <>
+              <Link href="/products-static" passHref>
+                <Nav.Link>Products static rendering</Nav.Link>
+              </Link>
               <Link href="/admin/products" passHref>
                 <Nav.Link>Products</Nav.Link>
               </Link>

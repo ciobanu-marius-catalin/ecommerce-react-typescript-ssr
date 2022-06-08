@@ -9,6 +9,7 @@ function CrudTablePagination({
   setPage = _.noop,
   nrOfPages = 0,
 } = {}) {
+  activePage = parseInt(activePage);
   if (nrOfPages < 2) {
     return <></>;
   }
@@ -34,7 +35,6 @@ function CrudTablePagination({
     }
     return items;
   }
-
 
   function getComplexPagination() {
     const ELLIPSIS_ELEMENT = 'ellipsisElement';

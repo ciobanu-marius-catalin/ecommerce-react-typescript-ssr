@@ -1,4 +1,4 @@
-.gravity-post-item {
+.product-list-page__item {
     overflow: hidden;
     background: white;
     padding: 8px;
@@ -50,7 +50,7 @@
 
     &--show-placeholder {
         $textPlaceholderColor: rgb(227, 227, 227);
-        .gravity-post-item {
+        .product-list-page__item {
             &__title {
                 height: 27px;
                 background: $textPlaceholderColor;
@@ -62,7 +62,7 @@
         }
     }
 }
-.post-list-page {
+.product-list-page {
     .infinite-scroll-component {
         display: flex;
         flex-wrap: wrap;

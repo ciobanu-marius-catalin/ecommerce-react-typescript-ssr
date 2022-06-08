@@ -1,6 +1,5 @@
-
 import { useContext, useState } from 'react';
-import {axios} from '@core'
+import { axios } from '@core';
 import { Icon } from '../icon';
 import { DeleteModal } from './delete-modal';
 import { useCrudContext } from './crud-context';
@@ -8,7 +7,6 @@ import { useErrorCatcher } from '@core';
 import { useRouter } from 'next/router';
 
 function TableContent({ data, columnNames, refreshPage } = {}) {
-
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteModalItem, setDeleteModalItem] = useState(null);
   const router = useRouter();
@@ -16,9 +14,7 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
   const { setError } = useErrorCatcher();
   let currentRouterPath = location.pathname;
 
-
   const onEdit = (item) => {
-
     const id = item?.id;
 
     let editRoute = `${currentRouterPath}/edit`;
@@ -32,7 +28,7 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
   const onDeleteItem = async () => {
     const item = deleteModalItem;
 
-    const path = `${apiPath}/${item?.id}`
+    const path = `${apiPath}/${item?.id}`;
     try {
       await axios.delete(path);
       refreshPage();
@@ -42,7 +38,6 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
     } finally {
       setShowDeleteModal(false);
     }
-
   };
   const onCancelDelete = () => {
     setShowDeleteModal(false);

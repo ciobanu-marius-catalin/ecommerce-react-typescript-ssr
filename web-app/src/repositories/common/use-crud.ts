@@ -42,6 +42,7 @@ function useCrud<Type>(path: string): CrudRepositoryInterface<Type> {
     [path]
   );
 
+  // @ts-ignore
   const routes: CrudRepositoryInterface<Type> = useMemo(() => {
     return {
       getItem,

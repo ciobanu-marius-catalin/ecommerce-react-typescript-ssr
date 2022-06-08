@@ -3,7 +3,7 @@ import { FrontendLayout } from '@layouts';
 
 // import { SearchInput } from "@components";
 
-const HomePage = () => {
+const ProductsStaticPage = ({ products, nrOfPages }) => {
   return (
     <div className="gravity-front-page">
       <div className="gravity-front-page__hero">
@@ -31,12 +31,12 @@ const HomePage = () => {
           {/*<SearchInput placeholder="Search for posts" />*/}
         </div>
       </div>
-      <List />
+      <List products={products} nrOfPages={nrOfPages} />
     </div>
   );
 };
 
-HomePage.getLayout = FrontendLayout;
+ProductsStaticPage.getLayout = FrontendLayout;
 
 export * from './product-page';
-export { HomePage };
+export { ProductsStaticPage };

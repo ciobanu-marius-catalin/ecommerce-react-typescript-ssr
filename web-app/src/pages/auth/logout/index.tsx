@@ -4,7 +4,6 @@ import { useAuth } from '../../../repositories';
 function LogoutPage() {
   const { logout } = useAuth();
   useEffect(() => {
-
     logout();
   }, []);
 

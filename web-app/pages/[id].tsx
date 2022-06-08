@@ -1,3 +1,3 @@
-import {PostPage} from  '@pages';
+import { ProductPage } from '@pages';
 
-export default PostPage;
+export default ProductPage;

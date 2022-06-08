@@ -19,6 +19,17 @@ directories.forEach((directory) => {
 
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ['image.tmdb.org'],
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.resolve.alias = {
       ...config.resolve.alias,
