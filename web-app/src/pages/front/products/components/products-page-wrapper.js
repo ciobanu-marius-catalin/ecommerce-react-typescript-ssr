@@ -1,9 +1,4 @@
-import { List } from './components';
-import { FrontendLayout } from '@layouts';
-
-// import { SearchInput } from "@components";
-
-const HomePage = () => {
+const ProductsPageWrapper = ({ children }) => {
   return (
     <div className="gravity-front-page">
       <div className="gravity-front-page__hero">
@@ -31,12 +26,9 @@ const HomePage = () => {
           {/*<SearchInput placeholder="Search for posts" />*/}
         </div>
       </div>
-      <List />
+      {children}
     </div>
   );
 };
 
-HomePage.getLayout = FrontendLayout;
-
-export * from './product-page';
-export { HomePage };
+export { ProductsPageWrapper };

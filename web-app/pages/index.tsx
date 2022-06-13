@@ -1,3 +1,3 @@
-import { HomePage } from '@pages';
+import { ProductsPage } from '@pages';
 
-export default HomePage;
+export default ProductsPage;
