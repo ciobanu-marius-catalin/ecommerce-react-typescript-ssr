@@ -16,33 +16,27 @@ class ProductSeeder extends Seeder
      */
     public function run()
     {
-        $movies = [];
-        for($i = 1; $i < 10; $i++) {
-            $movies = array_merge($movies, $this->getMovies($i));
-        }
-        DB::table('products')->insert($movies);
+        DB::table('products')->insert($this->getDummyProducts());
 
     }
-//https://developers.themoviedb.org/3/movies/get-top-rated-movies
-    public function getMovies($page = 1) {
-        $url = sprintf("https://api.themoviedb.org/3/movie/top_rated?api_key=%s&page=%s", env('MOVIE_API_KEY'), $page);
-        $data = json_decode(file_get_contents($url), true);
 
-        echo gettype($data);
+    public function getDummyProducts() {
+        $url = "https://fakestoreapi.com/products";
+        $products = json_decode(file_get_contents($url), true);
 
-        $results = $data['results'];
-        $movies = [];
+        $result = [];
 
-        $posterBasePath = 'https://image.tmdb.org/t/p/original';
-        foreach($results as $movie) {
-            $movies[] = [
-                'title' => $movie['title'] . ' DVD',
-                'description' => $movie['overview'],
-                'price' => rand(10, 500),
-                'thumbnail' =>  $posterBasePath . $movie['backdrop_path']
+
+        foreach($products as $product) {
+            $result[] = [
+                'title' => $product['title'],
+                'description' => $product['description'],
+                'price' => $product['price'],
+                'thumbnail' => $product['image'],
+                'category' => $product['category']
             ];
         }
 
-        return $movies;
+        return $result;
     }
 }

@@ -17,103 +17,19 @@ function CrudTablePagination({
   let firstPage = 1;
   let lastPage = nrOfPages;
 
+  let props = {
+    activePage,
+    firstPage,
+    setPage,
+    lastPage,
+  };
   if (nrOfPages < 2) {
-    items = getBasicPagination();
+    items = getBasicPagination(props);
   } else {
-    items = getComplexPagination();
+    items = getComplexPagination(props);
     //if(activePage === 1)
   }
-  function getBasicPagination() {
-    let items = [];
-    for (let i = 1; i <= nrOfPages; i++) {
-      let isActive = i === activePage;
-      items.push(
-        <Pagination.Item key={i} active={isActive} onClick={() => setPage(i)}>
-          {i}
-        </Pagination.Item>
-      );
-    }
-    return items;
-  }
 
-  function getComplexPagination() {
-    const ELLIPSIS_ELEMENT = 'ellipsisElement';
-    let nrOfVisibleItems = 3;
-    let nrOfLeftItems = Math.floor(nrOfVisibleItems / 2);
-    let nrOfRightItems = Math.floor(nrOfVisibleItems / 2);
-    let indexWithExtraPagination;
-
-    //for example you are on the second element 2 - 2 = 0 < 1. difference = 1 - 0 = 1;
-    //for example you are on the first element  1 - 2 = -1 < 1. the difference is 1 - (-1) = 2
-    if ((indexWithExtraPagination = activePage - nrOfLeftItems) < firstPage) {
-      let difference = firstPage - indexWithExtraPagination;
-      nrOfLeftItems -= difference;
-      nrOfRightItems += difference;
-    }
-
-    //for example if we have 50 elements on page 49 we'll have 49 + 2 = 51 the difference is 51 - 50 = 1;
-    if ((indexWithExtraPagination = activePage + nrOfRightItems) > lastPage) {
-      let difference = indexWithExtraPagination - lastPage;
-      nrOfLeftItems += difference;
-      nrOfRightItems -= difference;
-    }
-    let indexes = [];
-
-    let currentActivePage = activePage - nrOfLeftItems;
-    for (let i = 0; i < nrOfLeftItems; i++) {
-      let index = currentActivePage++;
-      indexes.push(index);
-    }
-
-    indexes.push(activePage);
-
-    currentActivePage = activePage;
-    for (let i = 0; i < nrOfRightItems; i++) {
-      let index = ++currentActivePage;
-      indexes.push(index);
-    }
-
-    if (!indexes.includes(firstPage)) {
-      if (firstPage + 1 !== indexes[0]) {
-        indexes.unshift(ELLIPSIS_ELEMENT);
-      }
-
-      indexes.unshift(firstPage);
-    }
-    if (!indexes.includes(lastPage)) {
-      if (lastPage - 1 !== indexes[indexes.length - 1]) {
-        indexes.push(ELLIPSIS_ELEMENT);
-      }
-
-      indexes.push(lastPage);
-    }
-
-    let items = useDeepMemo(() => {
-      return indexes.map((index, position) => {
-        const keyId = Math.random();
-        const isActive = index === activePage;
-        let isEllipsis = index === ELLIPSIS_ELEMENT;
-        let component;
-        if (isEllipsis) {
-          let key = `${keyId}-e-${position}`;
-          component = <Pagination.Ellipsis key={key} />;
-        } else {
-          component = (
-            <Pagination.Item
-              key={keyId + index}
-              active={isActive}
-              onClick={() => setPage(index)}
-            >
-              {index}
-            </Pagination.Item>
-          );
-        }
-
-        return <>{component}</>;
-      });
-    }, [indexes, activePage]);
-    return items;
-  }
   const onPrevious = () => {
     if (activePage > firstPage) {
       setPage(activePage - 1);
@@ -132,4 +48,102 @@ function CrudTablePagination({
     </Pagination>
   );
 }
+
+function getBasicPagination({ activePage, nrOfPages, setPage }) {
+  let items = [];
+  for (let i = 1; i <= nrOfPages; i++) {
+    let isActive = i === activePage;
+    items.push(
+      <Pagination.Item key={i} active={isActive} onClick={() => setPage(i)}>
+        {i}
+      </Pagination.Item>
+    );
+  }
+  return items;
+}
+
+function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
+  const ELLIPSIS_ELEMENT = 'ellipsisElement';
+  let nrOfVisibleItems = 3;
+  let nrOfLeftItems = Math.floor(nrOfVisibleItems / 2);
+  let nrOfRightItems = Math.floor(nrOfVisibleItems / 2);
+  let indexWithExtraPagination;
+
+  //for example you are on the second element 2 - 2 = 0 < 1. difference = 1 - 0 = 1;
+  //for example you are on the first element  1 - 2 = -1 < 1. the difference is 1 - (-1) = 2
+  if ((indexWithExtraPagination = activePage - nrOfLeftItems) < firstPage) {
+    let difference = firstPage - indexWithExtraPagination;
+    nrOfLeftItems -= Math.min(difference, firstPage);
+    nrOfRightItems += difference;
+  }
+
+  //for example if we have 50 elements on page 49 we'll have 49 + 2 = 51 the difference is 51 - 50 = 1;
+  if ((indexWithExtraPagination = activePage + nrOfRightItems) > lastPage) {
+    let difference = indexWithExtraPagination - lastPage;
+    nrOfLeftItems += difference;
+    nrOfRightItems -= difference;
+  }
+  let indexes = [];
+
+  let currentActivePage = activePage - nrOfLeftItems;
+  for (let i = 0; i < nrOfLeftItems; i++) {
+    let index = currentActivePage++;
+
+    if (index >= firstPage) {
+      indexes.push(index);
+    }
+  }
+
+  indexes.push(activePage);
+
+  currentActivePage = activePage;
+  for (let i = 0; i < nrOfRightItems; i++) {
+    let index = ++currentActivePage;
+    if (index <= lastPage) {
+      indexes.push(index);
+    }
+  }
+
+  if (!indexes.includes(firstPage)) {
+    if (firstPage + 1 !== indexes[0]) {
+      indexes.unshift(ELLIPSIS_ELEMENT);
+    }
+
+    indexes.unshift(firstPage);
+  }
+  if (!indexes.includes(lastPage)) {
+    if (lastPage - 1 !== indexes[indexes.length - 1]) {
+      indexes.push(ELLIPSIS_ELEMENT);
+    }
+
+    indexes.push(lastPage);
+  }
+
+  let items = useDeepMemo(() => {
+    return indexes.map((index, position) => {
+      const keyId = Math.random();
+      const isActive = index === activePage;
+      let isEllipsis = index === ELLIPSIS_ELEMENT;
+      let component;
+      if (isEllipsis) {
+        let key = `${keyId}-e-${position}`;
+        component = <Pagination.Ellipsis key={key} />;
+      } else {
+        component = (
+          <Pagination.Item
+            key={keyId + index}
+            active={isActive}
+            onClick={() => setPage(index)}
+          >
+            {index}
+          </Pagination.Item>
+        );
+      }
+
+      return <>{component}</>;
+    });
+  }, [indexes, activePage]);
+  return items;
+}
+
 export { CrudTablePagination };

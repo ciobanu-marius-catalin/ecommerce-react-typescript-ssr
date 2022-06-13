@@ -27,11 +27,11 @@ function PostContent({ data = {} }) {
       <div className="product-list-page__item__container">
         <Link href={link}>
           <a>
-            <div className="product-list-page__item__image-outer">
-              <div className="product-list-page__item__image-aspect-ratio">
-                {url && <img src={url} alt="featured-image" />}
+            {url && (
+              <div className="product-list-page__item__image-outer">
+                <img src={url} alt="featured-image" />
               </div>
-            </div>
+            )}
             <h2 className="product-list-page__item__title">{title}</h2>
           </a>
         </Link>

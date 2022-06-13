@@ -36,8 +36,8 @@ class ProductController extends Controller
 
     }
 
-    public function movies() {
-        $url = sprintf("https://api.themoviedb.org/3/movie/top_rated?api_key=%s&page=3", env('MOVIE_API_KEY'));
+    public function getDummyProducts() {
+        $url = "https://fakestoreapi.com/products";
         $data = json_decode(file_get_contents($url), true);
 
         return response()->json($data, 200);

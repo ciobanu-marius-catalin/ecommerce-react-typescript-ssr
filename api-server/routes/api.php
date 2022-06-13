@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth'], function () {
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{id}', [ProductController::class, 'show']);
 
-Route::get('/movies', [ProductController::class, 'movies']);
+Route::get('/products-dummy', [ProductController::class, 'getDummyProducts']);
 
 //Route::get('/posts', [PostController::class, 'index']);
 //Route::get('/posts/{post}', [PostController::class, 'show']);

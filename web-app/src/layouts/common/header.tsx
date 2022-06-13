@@ -31,7 +31,7 @@ function Header(): ReactElement {
                 <Nav.Link>Products static rendering</Nav.Link>
               </Link>
               <Link href="/admin/products" passHref>
-                <Nav.Link>Products</Nav.Link>
+                <Nav.Link>Edit products</Nav.Link>
               </Link>
               <Link href="/logout" passHref>
                 <Nav.Link>Logout</Nav.Link>
