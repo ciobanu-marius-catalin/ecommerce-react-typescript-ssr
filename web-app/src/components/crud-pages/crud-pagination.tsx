@@ -3,21 +3,50 @@
 import { Pagination } from 'react-bootstrap';
 import _ from 'lodash';
 import { useDeepMemo } from '@core';
+import { FC, ReactElement } from 'react';
 
-function CrudTablePagination({
-  activePage = null,
+interface CrudTablePaginationProps {
+  activePage: number | string;
+  setPage?: Function;
+  nrOfPages?: number;
+}
+interface GetSimplePaginationFunctionParams {
+  activePage: number;
+  setPage: Function;
+  nrOfPages: number;
+}
+
+interface GetComplexPaginationFunctionParams {
+  activePage: number;
+  setPage: Function;
+  firstPage: number;
+  lastPage: number;
+}
+
+interface GetPaginationFunctionParams
+  extends GetSimplePaginationFunctionParams,
+    GetComplexPaginationFunctionParams {}
+
+type GetPaginationFunctionType = (
+  params: GetPaginationFunctionParams
+) => ReactElement[];
+
+const CrudTablePagination: FC<CrudTablePaginationProps> = ({
+  activePage = 1,
   setPage = _.noop,
   nrOfPages = 0,
-} = {}) {
+}) => {
+  // @ts-ignore
   activePage = parseInt(activePage);
   if (nrOfPages < 2) {
     return <></>;
   }
-  let items = [];
-  let firstPage = 1;
-  let lastPage = nrOfPages;
+  let items: ReactElement[] = [];
+  const firstPage = 1;
+  const lastPage = nrOfPages;
 
-  let props = {
+  const props: GetPaginationFunctionParams = {
+    nrOfPages,
     activePage,
     firstPage,
     setPage,
@@ -47,12 +76,20 @@ function CrudTablePagination({
       <Pagination.Next onClick={onNext} />
     </Pagination>
   );
-}
+};
 
-function getBasicPagination({ activePage, nrOfPages, setPage }) {
-  let items = [];
+type GetBasicPaginationType = (
+  props: GetSimplePaginationFunctionParams
+) => ReactElement[];
+
+const getBasicPagination: GetBasicPaginationType = ({
+  activePage,
+  nrOfPages,
+  setPage,
+}) => {
+  const items = [];
   for (let i = 1; i <= nrOfPages; i++) {
-    let isActive = i === activePage;
+    const isActive = i === activePage;
     items.push(
       <Pagination.Item key={i} active={isActive} onClick={() => setPage(i)}>
         {i}
@@ -60,11 +97,20 @@ function getBasicPagination({ activePage, nrOfPages, setPage }) {
     );
   }
   return items;
-}
+};
 
-function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
+type GetComplexPaginationType = (
+  props: GetComplexPaginationFunctionParams
+) => ReactElement[];
+
+const getComplexPagination: GetComplexPaginationType = ({
+  activePage,
+  firstPage,
+  lastPage,
+  setPage,
+}) => {
   const ELLIPSIS_ELEMENT = 'ellipsisElement';
-  let nrOfVisibleItems = 3;
+  const nrOfVisibleItems = 3;
   let nrOfLeftItems = Math.floor(nrOfVisibleItems / 2);
   let nrOfRightItems = Math.floor(nrOfVisibleItems / 2);
   let indexWithExtraPagination;
@@ -72,22 +118,22 @@ function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
   //for example you are on the second element 2 - 2 = 0 < 1. difference = 1 - 0 = 1;
   //for example you are on the first element  1 - 2 = -1 < 1. the difference is 1 - (-1) = 2
   if ((indexWithExtraPagination = activePage - nrOfLeftItems) < firstPage) {
-    let difference = firstPage - indexWithExtraPagination;
+    const difference = firstPage - indexWithExtraPagination;
     nrOfLeftItems -= Math.min(difference, firstPage);
     nrOfRightItems += difference;
   }
 
   //for example if we have 50 elements on page 49 we'll have 49 + 2 = 51 the difference is 51 - 50 = 1;
   if ((indexWithExtraPagination = activePage + nrOfRightItems) > lastPage) {
-    let difference = indexWithExtraPagination - lastPage;
+    const difference = indexWithExtraPagination - lastPage;
     nrOfLeftItems += difference;
     nrOfRightItems -= difference;
   }
-  let indexes = [];
+  const indexes = [];
 
   let currentActivePage = activePage - nrOfLeftItems;
   for (let i = 0; i < nrOfLeftItems; i++) {
-    let index = currentActivePage++;
+    const index = currentActivePage++;
 
     if (index >= firstPage) {
       indexes.push(index);
@@ -98,7 +144,7 @@ function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
 
   currentActivePage = activePage;
   for (let i = 0; i < nrOfRightItems; i++) {
-    let index = ++currentActivePage;
+    const index = ++currentActivePage;
     if (index <= lastPage) {
       indexes.push(index);
     }
@@ -119,14 +165,14 @@ function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
     indexes.push(lastPage);
   }
 
-  let items = useDeepMemo(() => {
+  const items = useDeepMemo(() => {
     return indexes.map((index, position) => {
       const keyId = Math.random();
       const isActive = index === activePage;
-      let isEllipsis = index === ELLIPSIS_ELEMENT;
+      const isEllipsis = index === ELLIPSIS_ELEMENT;
       let component;
       if (isEllipsis) {
-        let key = `${keyId}-e-${position}`;
+        const key = `${keyId}-e-${position}`;
         component = <Pagination.Ellipsis key={key} />;
       } else {
         component = (
@@ -144,6 +190,6 @@ function getComplexPagination({ activePage, firstPage, lastPage, setPage }) {
     });
   }, [indexes, activePage]);
   return items;
-}
+};
 
 export { CrudTablePagination };
