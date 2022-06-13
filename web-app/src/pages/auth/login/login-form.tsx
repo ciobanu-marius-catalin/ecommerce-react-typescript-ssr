@@ -1,7 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { axios } from '@core';
-// import axios from "axios";
+import React, { ReactElement} from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import {
@@ -10,22 +7,19 @@ import {
   useDeepCallback,
   useErrorCatcher,
 } from '@core';
-import { useAuth } from '../../../repositories';
+import { useAuth, LoginFormInterface } from '@repositories';
 
-interface FormType {
-  email: string;
-  password: string;
-}
+
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
 function LoginForm(): ReactElement {
-  const defaultFormData: FormType = {
+  const defaultFormData: LoginFormInterface = {
     email: '',
     password: '',
   };
-  const { form, getFormData }: UseFormDataReturnType<FormType> =
-    useFormData<FormType>(defaultFormData);
+  const { form, getFormData }: UseFormDataReturnType<LoginFormInterface> =
+    useFormData<LoginFormInterface>(defaultFormData);
   const { error, getValidationError } = useErrorCatcher();
   const { login } = useAuth();
   const { errorMessage } = error || {};

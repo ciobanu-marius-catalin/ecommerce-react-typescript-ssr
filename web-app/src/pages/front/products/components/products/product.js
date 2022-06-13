@@ -2,10 +2,8 @@ import { Button, Col } from 'react-bootstrap';
 import { PlaceholderContent } from './placeholder-content';
 import { ProductContent } from './product-content';
 
-
 function Product({ data = {} }) {
   const { isPlaceholder } = data;
-
 
   const Content = isPlaceholder ? PlaceholderContent : ProductContent;
   return (

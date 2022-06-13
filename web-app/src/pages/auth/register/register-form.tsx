@@ -1,35 +1,26 @@
-import { useRouter } from 'next/router';
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
-import { axios } from '@core';
-// import axios from "axios";
+import React, { ReactElement } from 'react';
+
 import { Alert, Button, Form } from 'react-bootstrap';
-import Link from 'next/link';
+
 import {
   useFormData,
   UseFormDataReturnType,
   useDeepCallback,
   useErrorCatcher,
 } from '@core';
-import { useAuth } from '@repositories';
-
-interface FormType {
-  name: string;
-  email: string;
-  password: string;
-  password_confirmation: string;
-}
+import { useAuth, RegisterFormInterface } from '@repositories';
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
 function RegisterForm(): ReactElement {
-  const defaultFormData: FormType = {
+  const defaultFormData: RegisterFormInterface = {
     name: '',
     email: '',
     password: '',
     password_confirmation: '',
   };
-  const { form, getFormData }: UseFormDataReturnType<FormType> =
-    useFormData<FormType>(defaultFormData);
+  const { form, getFormData }: UseFormDataReturnType<RegisterFormInterface> =
+    useFormData<RegisterFormInterface>(defaultFormData);
   const { error, getValidationError } = useErrorCatcher();
   const { register } = useAuth();
   const { errorMessage } = error || {};

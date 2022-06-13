@@ -4,11 +4,7 @@ import { Container } from 'react-bootstrap';
 import { Header } from '../common';
 import { DashboardRoute } from '@core';
 
-interface BasicProps {
-  children: ReactNode;
-}
-
-function DashboardLayout(children: ReactElement): ReactElement {
+function DashboardLayout(children: ReactNode): ReactElement {
   return (
     <div id={'ecommerce-dashboard-layout'}>
       <Header />
@@ -17,7 +13,7 @@ function DashboardLayout(children: ReactElement): ReactElement {
   );
 }
 
-function Content({ children }: BasicProps): ReactElement {
+function Content({ children }: { children: ReactNode }): ReactElement {
   return (
     <Container className="ecommerce-auth-layout__container">
       <DashboardRoute>{children}</DashboardRoute>

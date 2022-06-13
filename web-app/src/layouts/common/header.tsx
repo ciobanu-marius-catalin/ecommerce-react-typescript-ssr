@@ -7,7 +7,7 @@ function Header(): ReactElement {
   const { user } = useUserContext();
 
   return (
-    <Navbar bg="light" variant="light"  expand="lg">
+    <Navbar bg="light" variant="light" expand="lg">
       <Container>
         <Link href="/">
           <Navbar.Brand href="/">Ecommerce</Navbar.Brand>

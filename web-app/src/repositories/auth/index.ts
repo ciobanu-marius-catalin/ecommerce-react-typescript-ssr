@@ -1,13 +1,21 @@
-import { axios } from '../../core';
 import { useRouter } from 'next/router';
 import { useUserContext } from '@store';
-import { useErrorCatcher } from '@core';
+import { useErrorCatcher, axios } from '@core';
+import { FC, useMemo } from 'react';
+import {
+  AuthInterface,
+  LoginFunctionType,
+  LogoutFunctionType,
+  RegisterFunctionType,
+  UseAuthFunctionType,
+} from './types';
 
-function useAuth() {
+const useAuth: UseAuthFunctionType = () => {
   const router = useRouter();
   const { setError, clearError } = useErrorCatcher();
   const { loadUser, setUser } = useUserContext();
-  const login = async (data) => {
+
+  const login: LoginFunctionType = async (data) => {
     try {
       clearError();
       const result = await axios.post(`/login`, data);
@@ -27,7 +35,7 @@ function useAuth() {
     }
   };
 
-  const logout = async () => {
+  const logout: LogoutFunctionType = async () => {
     try {
       clearError();
       setUser(null);
@@ -39,7 +47,7 @@ function useAuth() {
     }
   };
 
-  const register = async (data) => {
+  const register: RegisterFunctionType = async (data) => {
     try {
       clearError();
       await axios.post(`/register`, data);
@@ -50,11 +58,15 @@ function useAuth() {
     }
   };
 
-  return {
-    login,
-    register,
-    logout,
-  };
-}
+  const authFunctions: AuthInterface = useMemo(() => {
+    return {
+      login,
+      register,
+      logout,
+    };
+  }, [login, register, logout]);
 
+  return authFunctions;
+};
+export * from './types';
 export { useAuth };

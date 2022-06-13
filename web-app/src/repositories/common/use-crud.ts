@@ -1,18 +1,6 @@
 import { useCallback, useMemo } from 'react';
 import { axios } from '@core';
-
-interface GetParamsInterface {
-  perPage?: number;
-  page?: number;
-}
-
-export interface CrudRepositoryInterface<Type> {
-  getItem: (id: string | number) => Promise<Type | undefined>;
-  get?: (params: GetParamsInterface) => Promise<Type[]> | undefined;
-  delete?: (id: string | number) => void;
-  insert?: (item: Type) => void;
-  update?: (item: Type) => void;
-}
+import { GetParamsInterface, CrudRepositoryInterface } from './types';
 
 function useCrud<Type>(path: string): CrudRepositoryInterface<Type> {
   const getItem = useCallback(
@@ -53,4 +41,5 @@ function useCrud<Type>(path: string): CrudRepositoryInterface<Type> {
   return routes;
 }
 
+export * from './types';
 export { useCrud };

@@ -1,14 +1,12 @@
-import { Card } from 'react-bootstrap';
 import { ReactElement, ReactNode } from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
-import Link from 'next/link';
 import { Header } from '../common';
 
 interface BasicProps {
   children: ReactNode;
 }
 
-function FrontendLayout(children: ReactElement): ReactElement {
+function FrontendLayout(children: ReactNode): ReactElement {
   return (
     <div id={'ecommerce-frontend-layout'}>
       <Header />
