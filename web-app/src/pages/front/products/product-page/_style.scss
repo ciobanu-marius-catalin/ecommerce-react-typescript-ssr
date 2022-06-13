@@ -2,6 +2,8 @@
     margin-top: 170px;
     width: 100%;
     display: flex;
+    gap: 50px;
+
 
 
     &__title {
@@ -11,7 +13,6 @@
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
-        padding-right: 50px;
         img {
             max-width: 100%;
             max-height: 500px;
@@ -66,4 +67,13 @@
         }
     }
 
+}
+@include responsive-mobile {
+    .ecommerce-product-page {
+        margin-top: 80px;
+        flex-direction: column;
+        .ecommerce-product-page__image__outer {
+            justify-content: center;
+        }
+    }
 }

@@ -1,9 +1,7 @@
-import { ReactElement, ReactNode, useEffect } from 'react';
+import { ReactElement, ReactNode } from 'react';
 import { Container } from 'react-bootstrap';
 
 import { Header } from '../common';
-import { useRouter } from 'next/router';
-import { useUserContext } from '@store';
 import { DashboardRoute } from '@core';
 
 interface BasicProps {

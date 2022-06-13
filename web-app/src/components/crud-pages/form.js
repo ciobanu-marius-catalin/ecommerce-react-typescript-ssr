@@ -111,7 +111,6 @@ const CrudForm_ = (props) => {
 
   return (
     <div className="gravity-crud-form__container">
-      Add user
       <Form>
         {errorMessage && (
           <Alert className="w-100" variant="danger">

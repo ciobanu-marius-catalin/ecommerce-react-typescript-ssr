@@ -7,7 +7,7 @@ let settings = [
     type: 'input',
   },
   {
-    label: 'price',
+    label: 'Price',
     setting: 'price',
     type: 'input',
   },
@@ -16,6 +16,11 @@ let settings = [
     setting: 'description',
     as: 'textarea',
     rows: 3,
+  },
+  {
+    label: 'Category',
+    setting: 'category',
+    type: 'input',
   },
 ];
 
