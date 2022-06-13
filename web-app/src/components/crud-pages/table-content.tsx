@@ -1,23 +1,35 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, FC } from 'react';
 import { axios } from '@core';
 import { Icon } from '../icon';
 import { DeleteModal } from './delete-modal';
 import { useCrudContext } from './crud-context';
 import { useErrorCatcher } from '@core';
 import { useRouter } from 'next/router';
+import { ColumnNamesType, CrudObjectInterface } from './types';
 
-function TableContent({ data, columnNames, refreshPage } = {}) {
+interface TableContentPropsInterface {
+  data: Array<CrudObjectInterface>;
+  columnNames: ColumnNamesType;
+  refreshPage: Function;
+}
+
+const TableContent: FC<TableContentPropsInterface> = ({
+  data,
+  columnNames,
+  refreshPage,
+}) => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [deleteModalItem, setDeleteModalItem] = useState(null);
+  const [deleteModalItem, setDeleteModalItem] =
+    useState<CrudObjectInterface | null>(null);
   const router = useRouter();
   const { apiPath } = useCrudContext();
   const { setError } = useErrorCatcher();
-  let currentRouterPath = location.pathname;
+  const currentRouterPath = location.pathname;
 
   const onEdit = (item) => {
     const id = item?.id;
 
-    let editRoute = `${currentRouterPath}/edit`;
+    const editRoute = `${currentRouterPath}/edit`;
     router.push(`${editRoute}/${id}`);
   };
 
@@ -74,6 +86,6 @@ function TableContent({ data, columnNames, refreshPage } = {}) {
       />
     </>
   );
-}
+};
 
 export { TableContent };

@@ -1,6 +1,12 @@
 import { Icon } from '../icon';
+import { FC } from 'react';
+import { ColumnNamesType } from './types';
 
-function EmptyTableContent({ columnNames = [] }) {
+interface PropsInterface {
+  columnNames: ColumnNamesType;
+}
+
+const EmptyTableContent: FC<PropsInterface> = ({ columnNames = [] }) => {
   return (
     <tbody>
       <tr>
@@ -9,13 +15,13 @@ function EmptyTableContent({ columnNames = [] }) {
           colSpan={columnNames.length}
         >
           <div className="gravity-crud-table__empty-column__content">
-            <Icon name="meh"></Icon>
+            <Icon name="meh" />
             <span>No results found</span>
           </div>
         </td>
       </tr>
     </tbody>
   );
-}
+};
 
 export { EmptyTableContent };

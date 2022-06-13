@@ -1,7 +1,8 @@
 import { CrudForm } from './form';
+import { FC } from 'react';
 
-function EditPage(props) {
+const EditPage: FC = (props) => {
   return <CrudForm {...props} />;
-}
+};
 
 export { EditPage };

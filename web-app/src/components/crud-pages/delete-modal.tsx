@@ -1,11 +1,21 @@
 import { Modal, Button } from 'react-bootstrap';
 import _ from 'lodash';
+import { FC } from 'react';
 
-function DeleteModal({
+type onCancelFunctionType = () => void;
+type onDeleteFunctionType = () => void;
+
+interface DeleteModalProps {
+  show: boolean;
+  onCancel: onCancelFunctionType;
+  onDelete: onDeleteFunctionType;
+}
+
+const DeleteModal: FC<DeleteModalProps> = ({
   show = false,
   onCancel = _.noop,
   onDelete = _.noop,
-} = {}) {
+}) => {
   return (
     <Modal show={show} onHide={onCancel}>
       <Modal.Header closeButton>
@@ -26,6 +36,6 @@ function DeleteModal({
       </Modal.Footer>
     </Modal>
   );
-}
+};
 
 export { DeleteModal };

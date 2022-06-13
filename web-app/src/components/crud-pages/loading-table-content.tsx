@@ -1,6 +1,12 @@
 import { Icon } from '../icon';
+import { ColumnNamesType } from './types';
+import { FC } from 'react';
 
-function LoadingTableContent({ columnNames }) {
+interface PropsInterface {
+  columnNames: ColumnNamesType;
+}
+
+const LoadingTableContent: FC<PropsInterface> = ({ columnNames }) => {
   return (
     <tbody>
       <tr>
@@ -15,6 +21,6 @@ function LoadingTableContent({ columnNames }) {
       </tr>
     </tbody>
   );
-}
+};
 
 export { LoadingTableContent };

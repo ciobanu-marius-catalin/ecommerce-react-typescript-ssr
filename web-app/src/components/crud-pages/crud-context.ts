@@ -1,14 +1,18 @@
 import { createContext, useContext, useState } from 'react';
 import { useDeepMemo } from '@core';
 
-const defaultContext = {
+interface CrudContextInterface {
+  apiPath: string;
+}
+
+const defaultContext: CrudContextInterface = {
   apiPath: '',
 };
 
 const CrudContext = createContext(defaultContext);
 
 const useCrudContextValue = (localApiPath) => {
-  const contextValue = useDeepMemo(() => {
+  const contextValue: CrudContextInterface = useDeepMemo(() => {
     return {
       apiPath: localApiPath,
     };

@@ -1,20 +1,28 @@
 import { Alert, Button, Pagination, Table } from 'react-bootstrap';
 import _ from 'lodash';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef, useContext, FC } from 'react';
 import { CrudContext, useCrudContextValue } from './crud-context';
 import { CrudTablePagination } from './crud-pagination';
 import { useFetchedData } from './use-fetched-data';
 import { TableContent } from './table-content';
 import { EmptyTableContent } from './empty-table-content';
 import { LoadingTableContent } from './loading-table-content';
-
 import { useErrorCatcher } from '@core';
 import { useRouter } from 'next/router';
+import { ColumnNamesType } from './types';
 
-function CrudTable_({ columnNames = [], perPage = 10 } = {}) {
+interface CrudTableInnerProps {
+  columnNames: ColumnNamesType;
+  perPage: number;
+}
+
+const CrudTableInner: FC<CrudTableInnerProps> = ({
+  columnNames = [],
+  perPage = 10,
+}) => {
   const [page, setPage] = useState(1);
   const { error } = useErrorCatcher();
-  let { data, nrOfPages, isLoading, refreshPage } = useFetchedData({
+  const { data, nrOfPages, isLoading, refreshPage } = useFetchedData({
     columnNames,
     page,
     perPage,
@@ -58,18 +66,22 @@ function CrudTable_({ columnNames = [], perPage = 10 } = {}) {
       />
     </>
   );
+};
+
+interface CrudTableProps extends CrudTableInnerProps {
+  localApiPath: string;
 }
 
-function CrudTable(props = {}) {
+const CrudTable: FC<CrudTableProps> = (props) => {
   const { localApiPath } = props;
   const router = useRouter();
   const contextValue = useCrudContextValue(localApiPath);
 
-  let currentRouterPath = router.pathname;
+  const currentRouterPath = router.pathname;
 
   const onAdd = () => {
     //let editRoute =   '/dashboard/user/edit'
-    let addRoute = `${currentRouterPath}/add`;
+    const addRoute = `${currentRouterPath}/add`;
     router.push(addRoute);
   };
   return (
@@ -78,11 +90,11 @@ function CrudTable(props = {}) {
         <Button className="gravity-crud-table__add-button" onClick={onAdd}>
           Add item
         </Button>
-        <CrudTable_ {...props} />
+        <CrudTableInner {...props} />
       </div>
     </CrudContext.Provider>
   );
-}
+};
 
 export * from './form';
 export * from './edit-page';
