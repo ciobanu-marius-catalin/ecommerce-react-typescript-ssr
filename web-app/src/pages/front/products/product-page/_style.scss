@@ -1,59 +1,67 @@
-.gravity-post-page {
-    margin-top: 80px;
+.ecommerce-product-page {
+    margin-top: 170px;
     width: 100%;
-    max-width: 920px;
-
-    &__image__outer {
-        position: relative;
-        margin-top: 40px;
-        margin-bottom: 40px;
-        //16:9 aspect ratio
-        padding-top: 56.25%;
-        background: $imagePlaceholderColor;
-    }
-    &__image-aspect-ratio {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        overflow: hidden;
-        img {
-            transition: transform 0.5s linear;
-            width: 100%;
-            height: 100%;
-        }
-    }
-
-
+    display: flex;
 
 
     &__title {
-        font-weight: 600;
-        font-size: 44px;
-        line-height: 1.23em;
-        color: rgb(29, 25, 41);
-        margin-top: 16px;
-        padding-bottom: 0px;
+        font-weight: 300;
     }
-    &__content {
-        font-size: 18px;
+    &__image__outer {
+        display: flex;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-right: 50px;
+        img {
+            max-width: 100%;
+            max-height: 500px;
+        }
     }
-    &--show-placeholder {
-        $textPlaceholderColor: rgb(227, 227, 227);
-        .gravity-post-page {
-            &__title {
-                height: 54px;
-                background: $textPlaceholderColor;
-            }
-            &__date {
-                height: 24px;
-                background: $textPlaceholderColor;
-            }
-            &__content {
-                height: 28px;
-                margin-bottom: 15px;
-                background: $textPlaceholderColor;
+
+    &__price {
+        margin-top: 30px;
+        margin-bottom: 30px;
+        display: inline-block;
+        font-size: 22px;
+        font-weight: bold;
+        width: 100%;
+
+    }
+    &__description {
+        color: #6d6d6d
+    }
+
+    &__add-to-cart {
+        display: flex;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+
+    &__category {
+        display: flex;
+        &__item {
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+    }
+    &__container {
+        width: 100%;
+        &--show-placeholder {
+            .ecommerce-product-page{
+                &__image__outer {
+                    margin-right: 50px;
+                    height: 500px;
+                    background: $imagePlaceholderColor;
+                }
+
+                &__category,
+                &__price,
+                &__description,
+                &__title {
+                    width: 100%;
+                    height: 27px;
+                    background: $textPlaceholderColor;
+                }
             }
         }
     }

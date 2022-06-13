@@ -38,21 +38,16 @@
         color: var(--danger-color);
         margin-bottom: 10px;
     }
-    //&:hover {
-    //    img {
-    //        transform: scale(1.05);
-    //    }
-    //}
 
     &--show-placeholder {
-        $textPlaceholderColor: rgb(227, 227, 227);
         .product-list-page__item {
+            &__image-outer {
+                background: $imagePlaceholderColor;
+            }
+            &__price,
+            &__description,
             &__title {
                 height: 27px;
-                background: $textPlaceholderColor;
-            }
-            &__description {
-                height: 28px;
                 background: $textPlaceholderColor;
             }
         }

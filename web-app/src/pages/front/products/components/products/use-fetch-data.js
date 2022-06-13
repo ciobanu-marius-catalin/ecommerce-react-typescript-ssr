@@ -1,8 +1,17 @@
 import { useEffect, useRef, useState } from 'react';
 import { useProductRepository } from '../../../../../repositories';
 
+const dummyData = [];
+
+for (let i = 0; i < 12; i++) {
+  dummyData.push({
+    id: i,
+    isPlaceholder: true,
+  });
+}
+
 function useFetchData({ setError, perPage = 9, page = 1 }) {
-  let [data, setData] = useState([]);
+  let [data, setData] = useState(dummyData);
   let [nrOfPages, setNrOfPages] = useState(0);
   const isLoading = useRef(false);
   const productsRepository = useProductRepository();

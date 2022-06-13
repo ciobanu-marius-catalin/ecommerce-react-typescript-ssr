@@ -1,13 +1,17 @@
-import { useFetchData } from './use-fetch-data';
 import { Col, Container, Row } from 'react-bootstrap';
-import { PostContent } from './post-content';
+import { ProductContent } from './product-content';
+import { ProductContentPlaceholder } from './product-placeholder-content';
 
 function ProductPageWrapper({ data }) {
+  const { isPlaceholder } = data;
+
+  const Content = isPlaceholder ? ProductContentPlaceholder : ProductContent;
+
   return (
     <Container>
       <Row>
-        <Col className="d-flex justify-content-center">
-          <PostContent data={data} />
+        <Col className="d-flex justify-content-center p-0 ">
+          <Content data={data} />
         </Col>
       </Row>
     </Container>

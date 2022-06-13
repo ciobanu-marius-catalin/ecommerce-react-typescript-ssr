@@ -3,10 +3,14 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useProductRepository } from '../../../../repositories';
 
+const dummyData = {
+  id: 1,
+  isPlaceholder: true,
+};
 function useFetchData({ setError = _.noop } = {}) {
   const router = useRouter();
   const { id } = router.query;
-  let [data, setData] = useState([]);
+  let [data, setData] = useState(dummyData);
   let [isLoading, setIsLoading] = useState(true);
 
   const repository = useProductRepository();

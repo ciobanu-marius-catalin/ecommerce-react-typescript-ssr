@@ -3,7 +3,7 @@ import { useErrorCatcher } from '@core';
 import { useFetchData } from './use-fetch-data';
 import { ListContent } from './list-content';
 
-const itemsPerPage = 16;
+const itemsPerPage = 12;
 
 function List() {
   const [page, setPage] = useState(1);

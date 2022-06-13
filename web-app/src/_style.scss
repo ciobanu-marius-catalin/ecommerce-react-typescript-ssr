@@ -3,6 +3,7 @@
 @import "./layouts/style";
 @import "./pages/style";
 @import "./components/style";
+@import "./utils/_style.scss";
 
 a, .navbar-light .navbar-nav .nav-link {
   color:  var(--primary-color);
