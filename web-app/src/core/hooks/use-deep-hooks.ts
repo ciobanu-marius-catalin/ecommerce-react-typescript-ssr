@@ -23,7 +23,7 @@ const useDeepEffect = (callback, dependencies) => {
   return useEffect(callback, memoisedDependencies);
 };
 
-const useDeepCallback: useDeepFunction<any> = (callback, dependencies) => {
+const useDeepCallback = (callback, dependencies) => {
   const memoisedDependencies: Array<any> = useDeepCompareMemoize(dependencies);
   return useCallback(callback, memoisedDependencies);
 };

@@ -5,6 +5,7 @@ import {
   useContext,
   useEffect,
   useState,
+  FC,
 } from 'react';
 import _ from 'lodash';
 import {
@@ -20,10 +21,17 @@ import {
 } from './crud-context';
 import { axios } from '@core';
 import { useRouter } from 'next/router';
+import { FormSettingInterface, FormSettingWithData } from './types';
 
+interface CrudFormInnerProps {
+  settings: FormSettingInterface[];
+  method: string;
+  loadData: Function;
+  onBeforeSubmit: Function;
+  listApiPath: string;
+}
 
-
-const CrudForm_ = (props) => {
+const CrudFormInner: FC<CrudFormInnerProps> = (props) => {
   const [submitted, setSubmitted] = useState(false);
   const {
     settings = [],
@@ -49,7 +57,7 @@ const CrudForm_ = (props) => {
   let fetchedData = {};
   if (loadData) {
     fetchedData = useFetchData(apiPath);
-    let columns = settings.map((item) => item.setting);
+    const columns = settings.map((item) => item.setting);
     fetchedData = _.pick(fetchedData, columns);
   }
   const memoizedFetchedData = useDeepMemo(() => {
@@ -70,15 +78,15 @@ const CrudForm_ = (props) => {
   );
   const setValue = useDeepCallback(
     (path) => (newValue) => {
-      let data = _.get(newValue, ['target', 'value']);
-      let changes = _.set({}, path, data);
+      const data = _.get(newValue, ['target', 'value']);
+      const changes = _.set({}, path, data);
       setFormData(changes);
     },
     [formData, setFormData]
   );
 
-  const settingsWithData = useDeepMemo(() => {
-    return settings.map((item = {}) => {
+  const settingsWithData: FormSettingWithData = useDeepMemo(() => {
+    return settings.map((item) => {
       const setting = item?.setting;
       return _.merge({}, item, {
         value: getValue(setting),
@@ -90,14 +98,15 @@ const CrudForm_ = (props) => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    let path = `${apiPath}`;
+    const path = `${apiPath}`;
     let data = formData;
     if (onBeforeSubmit) {
       data = onBeforeSubmit(_.cloneDeep(formData));
     }
 
     try {
-      let response = await axios({
+      // @ts-ignore
+      const response = await axios({
         method: method,
         url: path,
         data: data,
@@ -119,26 +128,24 @@ const CrudForm_ = (props) => {
             {errorMessage}
           </Alert>
         )}
-        {settingsWithData.map(
-          ({ label, type, setting, ...props } = {}, index) => {
-            let validationError = _.get(validationErrors, [setting, 0]);
-            return (
-              <Form.Group key={index} className="mb-3">
-                <Form.Label>{label}</Form.Label>
-                <Form.Control
-                  type={type}
-                  isInvalid={submitted && validationError}
-                  {...props}
-                ></Form.Control>
-                {validationError && (
-                  <Form.Control.Feedback type="invalid">
-                    {validationError}
-                  </Form.Control.Feedback>
-                )}
-              </Form.Group>
-            );
-          }
-        )}
+        {settingsWithData.map(({ label, type, setting, ...props }, index) => {
+          const validationError = _.get(validationErrors, [setting, 0]);
+          return (
+            <Form.Group key={index} className="mb-3">
+              <Form.Label>{label}</Form.Label>
+              <Form.Control
+                type={type}
+                isInvalid={submitted && validationError}
+                {...props}
+              />
+              {validationError && (
+                <Form.Control.Feedback type="invalid">
+                  {validationError}
+                </Form.Control.Feedback>
+              )}
+            </Form.Group>
+          );
+        })}
 
         <Button onClick={onSubmit}>Save</Button>
       </Form>
@@ -150,10 +157,10 @@ function useFetchData(path) {
   const [data, setData] = useState({});
   const { setError } = useErrorCatcher();
   async function fetchData() {
-    let fetchResult = await axios.get(path, {
+    const fetchResult = await axios.get(path, {
       params: {},
     });
-    let fetchedData = _.get(fetchResult, 'data');
+    const fetchedData = _.get(fetchResult, 'data');
     if (fetchedData) {
       setData(fetchedData);
     }
@@ -170,12 +177,16 @@ function useFetchData(path) {
   return data;
 }
 
-const CrudForm = (props) => {
+interface CrudFormProps extends CrudFormInnerProps {
+  localApiPath: string;
+}
+
+const CrudForm: FC<CrudFormProps> = (props) => {
   const { localApiPath } = props;
   const contextValue = useCrudContextValue(localApiPath);
   return (
     <CrudContext.Provider value={contextValue}>
-      <CrudForm_ {...props} />
+      <CrudFormInner {...props} />
     </CrudContext.Provider>
   );
 };

@@ -99,4 +99,5 @@ const CrudTable: FC<CrudTableProps> = (props) => {
 export * from './form';
 export * from './edit-page';
 export * from './crud-pagination';
+export * from './types';
 export { CrudTable };

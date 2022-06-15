@@ -36,8 +36,10 @@ const CrudTablePagination: FC<CrudTablePaginationProps> = ({
   setPage = _.noop,
   nrOfPages = 0,
 }) => {
-  // @ts-ignore
-  activePage = parseInt(activePage);
+  if (typeof activePage === 'string') {
+    activePage = parseInt(activePage);
+  }
+
   if (nrOfPages < 2) {
     return <></>;
   }
@@ -61,11 +63,13 @@ const CrudTablePagination: FC<CrudTablePaginationProps> = ({
 
   const onPrevious = () => {
     if (activePage > firstPage) {
+      // @ts-ignore
       setPage(activePage - 1);
     }
   };
   const onNext = () => {
     if (activePage < lastPage) {
+      // @ts-ignore
       setPage(activePage + 1);
     }
   };
@@ -87,7 +91,7 @@ const getBasicPagination: GetBasicPaginationType = ({
   nrOfPages,
   setPage,
 }) => {
-  const items = [];
+  const items: ReactElement[] = [];
   for (let i = 1; i <= nrOfPages; i++) {
     const isActive = i === activePage;
     items.push(
@@ -129,11 +133,11 @@ const getComplexPagination: GetComplexPaginationType = ({
     nrOfLeftItems += difference;
     nrOfRightItems -= difference;
   }
-  const indexes = [];
+  const indexes: (string | number)[] = [];
 
   let currentActivePage = activePage - nrOfLeftItems;
   for (let i = 0; i < nrOfLeftItems; i++) {
-    const index = currentActivePage++;
+    const index: number = currentActivePage++;
 
     if (index >= firstPage) {
       indexes.push(index);
@@ -175,6 +179,7 @@ const getComplexPagination: GetComplexPaginationType = ({
         const key = `${keyId}-e-${position}`;
         component = <Pagination.Ellipsis key={key} />;
       } else {
+        // @ts-ignore
         component = (
           <Pagination.Item
             key={keyId + index}

@@ -1,6 +1,7 @@
 import { CrudForm } from '@components';
+import { FormSettingInterface } from '@components';
 
-let settings = [
+const settings: FormSettingInterface[] = [
   {
     label: 'Title',
     setting: 'title',
