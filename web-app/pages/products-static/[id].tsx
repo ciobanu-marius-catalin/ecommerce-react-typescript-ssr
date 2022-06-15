@@ -30,7 +30,6 @@ export async function getStaticProps({ params }) {
 
   const result = await axios.get(`/products/${id}`);
   const product = result?.data || {};
-  console.log('generate product');
   return {
     props: { product },
     //The page will be recomputed after 12h has passed. Only at the next request

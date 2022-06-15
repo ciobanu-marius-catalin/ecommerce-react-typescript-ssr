@@ -21,6 +21,7 @@ a simple CRUD application that uses a modern tech stack
 - Eslint 
 - SCSS 
 - CSS BEM
+- CSS modules
 
 
 

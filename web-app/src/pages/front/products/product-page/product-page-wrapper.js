@@ -2,7 +2,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { ProductContent } from './product-content';
 import { ProductContentPlaceholder } from './product-placeholder-content';
 
-function ProductPageWrapper({ data }) {
+function ProductPageWrapper({ data = {} }) {
   const { isPlaceholder } = data;
 
   const Content = isPlaceholder ? ProductContentPlaceholder : ProductContent;
