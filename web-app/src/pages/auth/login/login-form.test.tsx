@@ -1,10 +1,14 @@
 import singletonRouter, { useRouter } from 'next/router';
-import { withNoConsoleErrors } from '@test-utils';
+import {
+  getAxiosValidationErrorResponse,
+  withNoConsoleErrors,
+} from '@test-utils';
 import { LoginForm } from './login-form';
 import { render, fireEvent, act, waitFor } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
-import { axios } from '@core';
+import { axios, ErrorCatcher } from '@core';
 import { screen } from '@testing-library/dom';
+import { renderHook } from '@testing-library/react-hooks';
 
 jest.mock('axios', () => {
   return {
@@ -22,9 +26,12 @@ jest.mock('next/router', () => require('next-router-mock'));
 
 //jest.mock('next/dist/client/router', () => require('next-router-mock'));
 
+// const useRouter = jest.spyOn(require('next/router'), 'useRouter');
+
 describe('pages/auth/login/login-form', () => {
   beforeEach(() => {
     mockRouter.setCurrentUrl('/login');
+    jest.spyOn(console, 'error').mockImplementation(() => {});
   });
   it(
     "doesn't crash",
@@ -32,40 +39,71 @@ describe('pages/auth/login/login-form', () => {
       render(<LoginForm />);
     })
   );
-  it('successfully login', async () => {
-    axios.post.mockImplementation(() =>
-      Promise.resolve({ status: 400, data: {} })
-    );
+  it('submit form successfully', async () => {
+    axios.post.mockResolvedValueOnce();
     const { container } = render(<LoginForm />);
+    const email = 'test@email.com';
+    const password = 'testPassword';
+    const { emailInputNode, passwordInputNode, submitButton } =
+      getFormNodes(container);
 
-    const emailInputNode = container.querySelector('input[type="email"]');
-    const passwordInputNode = container.querySelector('input[type="password"]');
-    const submitButton = container.querySelector('button[type="submit"]');
     const nodesFound =
       !!emailInputNode && !!passwordInputNode && !!submitButton;
     expect(nodesFound).toEqual(true);
 
-    if (!nodesFound) {
-      return;
-    }
-
     fireEvent.change(emailInputNode, {
-      target: { value: 'admin@gmail.com' },
+      target: { value: email },
     });
-    fireEvent.change(passwordInputNode, { target: { value: 'admin2' } });
+    fireEvent.change(passwordInputNode, { target: { value: password } });
 
     fireEvent.click(submitButton);
-    expect(await screen.getByText('The given data was invalid')).toBeVisible();
-    //await waitFor(() => container.querySelector('input[type="email"]'));
-    // const { result } = renderHook(() => {
-    //   return useRouter();
-    // });
-    // expect(result.current).toMatchObject({ asPath: '/' });
-    // await waitFor(() => document.querySelector('.gravity-front-page'));
-    // await waitFor(() => {
-    //   expect(singletonRouter).toMatchObject({
-    //     asPath: '/register',
-    //   });
-    // });
+
+    expect(axios.post).toHaveBeenCalledWith('/login', {
+      email,
+      password,
+    });
+  });
+  it('successfully logged in', async () => {
+    axios.post.mockResolvedValueOnce();
+    const { container } = render(<LoginForm />);
+    const { submitButton } = getFormNodes(container);
+
+    fireEvent.click(submitButton);
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    const { result: router } = renderHook(() => {
+      return useRouter();
+    });
+    expect(router.current).toMatchObject({ asPath: '/' });
+  });
+
+  it('failed login', async () => {
+    axios.post.mockRejectedValueOnce(getAxiosValidationErrorResponse());
+    const { container } = render(
+      <ErrorCatcher>
+        <LoginForm />
+      </ErrorCatcher>
+    );
+
+    const { submitButton } = getFormNodes(container);
+
+    fireEvent.click(submitButton);
+
+    await new Promise((r) => setTimeout(r, 200));
+
+    expect(await screen.getByTestId('alert')).toBeVisible();
+
   });
 });
+
+function getFormNodes(container) {
+  const emailInputNode = container.querySelector('input[type="email"]');
+  const passwordInputNode = container.querySelector('input[type="password"]');
+  const submitButton = container.querySelector('button[type="submit"]');
+  return {
+    emailInputNode,
+    passwordInputNode,
+    submitButton,
+  };
+}

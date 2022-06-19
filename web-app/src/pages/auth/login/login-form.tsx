@@ -1,4 +1,4 @@
-import React, { ReactElement} from 'react';
+import React, { ReactElement } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import {
@@ -8,8 +8,6 @@ import {
   useErrorCatcher,
 } from '@core';
 import { useAuth, LoginFormInterface } from '@repositories';
-
-
 
 type OnSubmitType = (e: React.FormEvent<HTMLFormElement>) => void;
 
@@ -32,8 +30,12 @@ function LoginForm(): ReactElement {
     [form]
   );
   return (
-    <Form onSubmit={onSubmit}>
-      {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
+    <Form data-testid="form" onSubmit={onSubmit}>
+      {errorMessage && (
+        <Alert data-testid="alert" variant={'danger'}>
+          {errorMessage}
+        </Alert>
+      )}
 
       <Form.Group className="mb-3" controlId="email">
         <Form.Label>Email address</Form.Label>

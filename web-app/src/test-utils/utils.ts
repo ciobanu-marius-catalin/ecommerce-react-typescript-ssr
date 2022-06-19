@@ -4,4 +4,16 @@ const withNoConsoleErrors = (callback: Function) => () => {
   expect(spy).not.toHaveBeenCalled();
 };
 
-export { withNoConsoleErrors };
+const getAxiosValidationErrorResponse = () => {
+  return {
+    response: {
+      status: 422,
+      data: {
+        errors: ['test'],
+        message: 'Test error',
+      },
+    },
+  };
+};
+
+export { withNoConsoleErrors, getAxiosValidationErrorResponse};

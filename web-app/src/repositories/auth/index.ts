@@ -29,9 +29,7 @@ const useAuth: UseAuthFunctionType = () => {
         setUser(user);
         loadUser();
       }
-      console.log('before redirect');
       router.push('/');
-      console.log('after redirect');
     } catch (e) {
       setError(e);
       console.error(e);
