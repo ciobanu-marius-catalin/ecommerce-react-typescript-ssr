@@ -4,3 +4,4 @@ export * from './store';
 export * from './repositories';
 export * from './layouts';
 export * from './pages';
+export * from './test-utils';

@@ -3,7 +3,7 @@ import { axios } from '@core';
 
 export async function getServerSideProps({ query  }) {
   const { page = 1 } = query || {};
-  console.log('page params are', query);
+
   const perPage = 12;
   const result = await axios.get('/products', {
     params: {

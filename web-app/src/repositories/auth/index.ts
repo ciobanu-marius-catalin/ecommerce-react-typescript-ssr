@@ -18,6 +18,7 @@ const useAuth: UseAuthFunctionType = () => {
   const login: LoginFunctionType = async (data) => {
     try {
       clearError();
+
       const result = await axios.post(`/login`, data);
 
       const userId = result?.data?.userId;
@@ -28,7 +29,9 @@ const useAuth: UseAuthFunctionType = () => {
         setUser(user);
         loadUser();
       }
-      await router.push('/');
+      console.log('before redirect');
+      router.push('/');
+      console.log('after redirect');
     } catch (e) {
       setError(e);
       console.error(e);

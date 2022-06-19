@@ -53,6 +53,8 @@
       "rules": {
         "@typescript-eslint/ban-types": "off",
         "@typescript-eslint/ban-ts-comment": "off",
+        "testing-library/no-container": "off",
+        "testing-library/no-node-access": "off",
         "prettier/prettier": ["error", {"singleQuote": true}]
       }
     }

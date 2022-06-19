@@ -1,21 +1,29 @@
 // jest.config.js
-const nextJest = require("next/jest");
+const nextJest = require('next/jest');
 
 const createJestConfig = nextJest({
   // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
-  dir: "./",
+  dir: './',
 });
 
 // Add any custom config to be passed to Jest
 const customJestConfig = {
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // Add more setup options before each test is run
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
-  moduleDirectories: ["node_modules", "<rootDir>/"],
-  testEnvironment: "jest-environment-jsdom",
+  moduleDirectories: ['node_modules', '<rootDir>/'],
+  testEnvironment: 'jest-environment-jsdom',
   moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/src/$1",
+    '@core': '<rootDir>/src/core',
+    '@layouts': '<rootDir>/src/layouts',
+    '@pages': '<rootDir>/src/pages',
+    '@repositories': '<rootDir>/src/repositories',
+    '@store': '<rootDir>/src/store',
+    '@styles': '<rootDir>/src/styles',
+    '@utils': '<rootDir>/src/utils',
+    '@components': '<rootDir>/src/components',
+    '@test-utils': '<rootDir>/src/test-utils',
   },
 };
 
