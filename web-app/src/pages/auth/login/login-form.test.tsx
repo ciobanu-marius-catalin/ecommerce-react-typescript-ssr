@@ -33,12 +33,9 @@ describe('pages/auth/login/login-form', () => {
     mockRouter.setCurrentUrl('/login');
     jest.spyOn(console, 'error').mockImplementation(() => {});
   });
-  it(
-    "doesn't crash",
-    withNoConsoleErrors(() => {
-      render(<LoginForm />);
-    })
-  );
+  it("doesn't crash", () => {
+    render(<LoginForm />);
+  });
   it('submit form successfully', async () => {
     axios.post.mockResolvedValueOnce();
     const { container } = render(<LoginForm />);
@@ -93,7 +90,6 @@ describe('pages/auth/login/login-form', () => {
     await new Promise((r) => setTimeout(r, 200));
 
     expect(await screen.getByTestId('alert')).toBeVisible();
-
   });
 });
 

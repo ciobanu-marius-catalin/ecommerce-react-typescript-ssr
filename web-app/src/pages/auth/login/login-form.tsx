@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import Link from 'next/link';
 import {
@@ -16,6 +16,7 @@ function LoginForm(): ReactElement {
     email: '',
     password: '',
   };
+
   const { form, getFormData }: UseFormDataReturnType<LoginFormInterface> =
     useFormData<LoginFormInterface>(defaultFormData);
   const { error, getValidationError } = useErrorCatcher();
