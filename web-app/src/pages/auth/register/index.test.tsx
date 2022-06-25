@@ -1,12 +1,12 @@
 import { withNoConsoleErrors } from '@test-utils';
-import { LoginPage } from './index';
+import { RegisterPage } from './index';
 import { render } from '@testing-library/react';
 
-describe('pages/auth/login/index', () => {
+describe('pages/auth/register/index', () => {
   it(
     'not crashes',
     withNoConsoleErrors(() => {
-      render(<LoginPage />);
+      render(<RegisterPage />);
     })
   );
 });

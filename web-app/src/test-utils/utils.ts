@@ -4,16 +4,33 @@ const withNoConsoleErrors = (callback: Function) => () => {
   expect(spy).not.toHaveBeenCalled();
 };
 
-const getAxiosValidationErrorResponse = () => {
+const sleep = async (time = 300) => {
+  await new Promise((resolve) => setTimeout(resolve, 300));
+};
+
+type validationErrorType = {
+  [key: string]: string[];
+};
+
+interface validationParamInterface {
+  validationErrors?: validationErrorType;
+}
+
+const defaultParam = {
+  error: ['dummy'],
+};
+const getAxiosValidationErrorResponse = ({
+  validationErrors = defaultParam,
+}: validationParamInterface) => {
   return {
     response: {
       status: 422,
       data: {
-        errors: ['test'],
+        errors: validationErrors,
         message: 'Test error',
       },
     },
   };
 };
 
-export { withNoConsoleErrors, getAxiosValidationErrorResponse};
+export { withNoConsoleErrors, getAxiosValidationErrorResponse, sleep };

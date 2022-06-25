@@ -1,51 +1,72 @@
 import singletonRouter, { useRouter } from 'next/router';
 import {
-  getAxiosValidationErrorResponse, sleep,
+  getAxiosValidationErrorResponse,
+  sleep,
   withNoConsoleErrors,
 } from '@test-utils';
-import { LoginForm } from './login-form';
 import { render, fireEvent, act, waitFor } from '@testing-library/react';
 import mockRouter from 'next-router-mock';
 import { axios, ErrorCatcher } from '@core';
 import { screen } from '@testing-library/dom';
 import { renderHook } from '@testing-library/react-hooks';
+import { RegisterForm } from './register-form';
 
-
-describe('pages/auth/login/login-form', () => {
+describe('pages/auth/register/register-form', () => {
   beforeEach(() => {
-    mockRouter.setCurrentUrl('/login');
+    mockRouter.setCurrentUrl('/register');
     jest.spyOn(console, 'error').mockImplementation(() => {});
   });
   it("doesn't crash", () => {
-    render(<LoginForm />);
+    render(<RegisterForm />);
   });
   it('submit form successfully', async () => {
     axios.post.mockResolvedValueOnce();
-    const { container } = render(<LoginForm />);
+    const { container } = render(<RegisterForm />);
+    const name = 'name';
     const email = 'test@email.com';
     const password = 'testPassword';
-    const { emailInputNode, passwordInputNode, submitButton } =
-      getFormNodes(container);
+    const confirmPassword = password;
+    const {
+      nameInputNode,
+      emailInputNode,
+      passwordInputNode,
+      submitButton,
+      confirmPasswordNode,
+    } = getFormNodes(container);
 
     const nodesFound =
-      !!emailInputNode && !!passwordInputNode && !!submitButton;
+      !!nameInputNode &&
+      !!emailInputNode &&
+      !!passwordInputNode &&
+      !!submitButton &&
+      !!confirmPasswordNode;
     expect(nodesFound).toEqual(true);
+
+    fireEvent.change(nameInputNode, {
+      target: { value: name },
+    });
 
     fireEvent.change(emailInputNode, {
       target: { value: email },
     });
     fireEvent.change(passwordInputNode, { target: { value: password } });
 
+    fireEvent.change(confirmPasswordNode, {
+      target: { value: confirmPassword },
+    });
+
     fireEvent.click(submitButton);
 
-    expect(axios.post).toHaveBeenCalledWith('/login', {
+    expect(axios.post).toHaveBeenCalledWith('/register', {
+      name,
       email,
       password,
+      password_confirmation: confirmPassword,
     });
   });
-  it('successfully logged in', async () => {
+  it('successfully registered', async () => {
     axios.post.mockResolvedValueOnce();
-    const { container } = render(<LoginForm />);
+    const { container } = render(<RegisterForm />);
     const { submitButton } = getFormNodes(container);
 
     fireEvent.click(submitButton);
@@ -55,21 +76,23 @@ describe('pages/auth/login/login-form', () => {
     const { result: router } = renderHook(() => {
       return useRouter();
     });
-    expect(router.current).toMatchObject({ asPath: '/' });
+    expect(router.current).toMatchObject({ asPath: '/login' });
   });
 
-  it('failed login', async () => {
+  it('failed registration', async () => {
     axios.post.mockRejectedValueOnce(
       getAxiosValidationErrorResponse({
         validationErrors: {
-          email: ['emailError'],
-          password: ['password error'],
+          name: ['nameError'],
+           email: ['emailError'],
+           password: ['password error'],
+           password_confirmation: ['confirm password error'],
         },
       })
     );
     const { container } = render(
       <ErrorCatcher>
-        <LoginForm />
+        <RegisterForm />
       </ErrorCatcher>
     );
 
@@ -81,22 +104,32 @@ describe('pages/auth/login/login-form', () => {
 
     expect(await screen.getByTestId('alert')).toBeVisible();
 
-    const emailErrorNode = await screen.getByTestId('email-error');
-    expect(!!emailErrorNode.innerHTML).toEqual(true);
-
-    const passwordErrorNode = await screen.getByTestId('password-error');
-
-    expect(!!passwordErrorNode.innerHTML).toEqual(true);
+    const validationTestIds = [
+      'name-error',
+      'email-error',
+      'password-error',
+      'confirm-password-error',
+    ];
+    validationTestIds.map((testId) => {
+      const node = screen.getByTestId(testId);
+      expect(!!node.innerHTML).toEqual(true);
+    });
   });
 });
 
 function getFormNodes(container) {
+  const nameInputNode = container.querySelector('[name="name"]');
   const emailInputNode = container.querySelector('input[type="email"]');
-  const passwordInputNode = container.querySelector('input[type="password"]');
+  const passwordInputNode = container.querySelector('[name="password"]');
+  const confirmPasswordNode = container.querySelector(
+    '[name="confirmPassword"]'
+  );
   const submitButton = container.querySelector('button[type="submit"]');
   return {
+    nameInputNode,
     emailInputNode,
     passwordInputNode,
     submitButton,
+    confirmPasswordNode,
   };
 }

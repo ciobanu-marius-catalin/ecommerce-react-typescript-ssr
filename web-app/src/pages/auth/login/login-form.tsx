@@ -46,7 +46,7 @@ function LoginForm(): ReactElement {
           {...getFormData('email')}
           isInvalid={!!getValidationError('email')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid" data-testid="email-error">
           {getValidationError('email')}
         </Form.Control.Feedback>
       </Form.Group>
@@ -59,7 +59,7 @@ function LoginForm(): ReactElement {
           {...getFormData('password')}
           isInvalid={!!getValidationError('email')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid" data-testid="password-error">
           {getValidationError('password')}
         </Form.Control.Feedback>
       </Form.Group>

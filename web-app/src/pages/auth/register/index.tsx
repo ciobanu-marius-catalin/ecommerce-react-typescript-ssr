@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { ReactElement } from 'react';
 import { AuthenticationLayout } from '@layouts';
 import { RegisterForm } from './register-form';
 
-function RegisterPage(): React.ReactNode {
+function RegisterPage(): ReactElement {
   return (
     <div className="ecommerce-login-page">
       <div className="ecommerce-login-page__title mb-5">

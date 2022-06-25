@@ -34,17 +34,22 @@ function RegisterForm(): ReactElement {
   );
   return (
     <Form onSubmit={onSubmit}>
-      {errorMessage && <Alert variant={'danger'}>{errorMessage}</Alert>}
+      {errorMessage && (
+        <Alert variant={'danger'} data-testid="alert">
+          {errorMessage}
+        </Alert>
+      )}
 
       <Form.Group className="mb-3" controlId="name">
         <Form.Label>Name</Form.Label>
         <Form.Control
+          name="name"
           type="text"
           placeholder="Enter name"
           {...getFormData('name')}
           isInvalid={!!getValidationError('name')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid" data-testid="name-error">
           {getValidationError('name')}
         </Form.Control.Feedback>
       </Form.Group>
@@ -57,7 +62,7 @@ function RegisterForm(): ReactElement {
           {...getFormData('email')}
           isInvalid={!!getValidationError('email')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid" data-testid="email-error">
           {getValidationError('email')}
         </Form.Control.Feedback>
       </Form.Group>
@@ -65,12 +70,13 @@ function RegisterForm(): ReactElement {
       <Form.Group className="mb-3" controlId="password">
         <Form.Label>Password</Form.Label>
         <Form.Control
+          name="password"
           type="password"
           placeholder="Enter password"
           {...getFormData('password')}
           isInvalid={!!getValidationError('email')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback type="invalid" data-testid="password-error">
           {getValidationError('password')}
         </Form.Control.Feedback>
       </Form.Group>
@@ -78,12 +84,16 @@ function RegisterForm(): ReactElement {
       <Form.Group className="mb-3" controlId="password_confirmation">
         <Form.Label>Password</Form.Label>
         <Form.Control
+          name="confirmPassword"
           type="password"
           placeholder="Confirm password"
           {...getFormData('password_confirmation')}
           isInvalid={!!getValidationError('password_confirmation')}
         />
-        <Form.Control.Feedback type="invalid">
+        <Form.Control.Feedback
+          type="invalid"
+          data-testid="confirm-password-error"
+        >
           {getValidationError('password_confirmation')}
         </Form.Control.Feedback>
       </Form.Group>
